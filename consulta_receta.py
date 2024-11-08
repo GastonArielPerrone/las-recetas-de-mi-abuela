@@ -7,6 +7,7 @@ db = SqliteDatabase('recetas.db')
 
 class Categoria(Model):
     nombre_categoria = CharField()
+
     class Meta:
         database = db
 
@@ -17,6 +18,7 @@ class Recetas(Model):
     preparacion = TextField()
     id_categoria = ForeignKeyField(Categoria, backref='recetas')
     fecha_publicacion = DateTimeField(default=datetime.now)
+
     class Meta:
         database = db
 
@@ -52,7 +54,7 @@ if recetas_container is None:
 # Generar contenido HTML para recetas
 if not recetas:
     no_recetas_message = soup.new_tag("p")
-    no_recetas_message.string = "Por el momento no hay receta. Disculpe el tiempo perdido."
+    no_recetas_message.string = "¡Lo siento! En este momento no tengo receta cargada."
     recetas_container.append(no_recetas_message)
     print("No se encontraron recetas en la base de datos.")
 else:
