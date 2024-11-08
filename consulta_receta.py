@@ -41,18 +41,22 @@ except FileNotFoundError:
 
 # Verificar y crear 'recetas-container'
 recetas_container = soup.find(id="recetas-container")
+# Generar contenido HTML para recetas
 if recetas_container is None:
     print("No se encontró el contenedor 'recetas-container'. Creando uno nuevo.")
     recetas_container = soup.new_tag("div", id="recetas-container")
+
+    # Verificar si el <body> existe
     if soup.body:
         soup.body.append(recetas_container)
     else:
-        root = soup.new_tag("body")
-        root.append(recetas_container)
-        soup.append(root)
+        # Si no existe <body>, crear uno
+        body_tag = soup.new_tag("body")
+        body_tag.append(recetas_container)  # Añadir el contenedor a body
+        soup.append(body_tag)  # Añadir body al HTML
 
 # Generar contenido HTML para recetas
-if not recetas:
+if not recetas.exists():  # Verificar si hay recetas
     no_recetas_message = soup.new_tag("p")
     no_recetas_message.string = "¡Lo siento! En este momento no tengo receta cargada."
     recetas_container.append(no_recetas_message)
