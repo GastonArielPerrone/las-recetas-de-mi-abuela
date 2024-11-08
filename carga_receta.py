@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template
 from peewee import SqliteDatabase, Model, AutoField, CharField, ForeignKeyField, DateField, IntegrityError, DoesNotExist
-from datetime import date
+from datetime import date, datetime
 
 # Inicializar la aplicación y la base de datos
 app = Flask(__name__)
@@ -20,7 +20,7 @@ class Recetas(BaseModel):
     id_receta = AutoField()
     nombre_receta = CharField()
     id_categoria = ForeignKeyField(Categorias, backref='recetas')
-    fecha_publicacion = DateField()
+    fecha_publicacion = DateField(default=date.today)
 
 # Crear las tablas
 db.connect()
