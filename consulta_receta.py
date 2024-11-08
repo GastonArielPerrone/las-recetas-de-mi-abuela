@@ -42,10 +42,17 @@ recetas_container = soup.find(id="recetas-container")
 
 # Verificar si el contenedor fue encontrado
 if recetas_container is None:
-    print("Error: No se encontró el contenedor 'recetas-container'.")
+    print("No se encontró el contenedor 'recetas-container'. Creando uno nuevo.")
     # Si no existe, crearlo
     recetas_container = soup.new_tag("div", id="recetas-container")
-    soup.body.append(recetas_container)
+    # Asegúrate de agregar el contenedor al lugar adecuado en el HTML
+    if soup.body:
+        soup.body.append(recetas_container)
+    else:
+        # Si no se encuentra <body>, crea un contenedor raíz
+        root = soup.new_tag("body")
+        root.append(recetas_container)
+        soup.append(root)
 
 # Si no hay recetas en la base de datos, agregar el mensaje correspondiente
 if not recetas:
