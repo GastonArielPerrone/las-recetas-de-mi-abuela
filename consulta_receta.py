@@ -56,17 +56,47 @@ if recetas_container is None:
 
 # Si no hay recetas en la base de datos, agregar el mensaje correspondiente
 if not recetas:
-    recetas_container.append("<p>Por el momento no hay receta. Disculpe el tiempo perdido.</p>")
+    no_recetas_message = soup.new_tag("p")
+    no_recetas_message.string = "Por el momento no hay receta. Disculpe el tiempo perdido."
+    recetas_container.append(no_recetas_message)
 else:
     # Si hay recetas, agregar los detalles de cada una
     for receta in recetas:
-        receta_div = soup.new_tag("div")
-        receta_div.append(f"<h2>{receta.nombre_receta}</h2>")
-        receta_div.append(f'<img src="{receta.imagen}" alt="Imagen de {receta.nombre_receta}" width="200">')
-        receta_div.append(f"<p><strong>Categoria:</strong> {receta.id_categoria.nombre_categoria}</p>")
-        receta_div.append(f"<p><strong>Ingredientes:</strong><br>{receta.ingredientes}</p>")
-        receta_div.append(f"<p><strong>Preparación:</strong><br>{receta.preparacion}</p>")
-        
+        receta_div = soup.new_tag("div", attrs={"class": "receta"})
+
+        # Título de la receta
+        h2_tag = soup.new_tag("h2")
+        h2_tag.string = receta.nombre_receta
+        receta_div.append(h2_tag)
+
+        # Imagen de la receta
+        img_tag = soup.new_tag("img", src=receta.imagen, alt=f"Imagen de {receta.nombre_receta}", width="200")
+        receta_div.append(img_tag)
+
+        # Categoría de la receta
+        p_categoria = soup.new_tag("p")
+        strong_categoria = soup.new_tag("strong")
+        strong_categoria.string = "Categoria: "
+        p_categoria.append(strong_categoria)
+        p_categoria.append(receta.id_categoria.nombre_categoria)
+        receta_div.append(p_categoria)
+
+        # Ingredientes de la receta
+        p_ingredientes = soup.new_tag("p")
+        strong_ingredientes = soup.new_tag("strong")
+        strong_ingredientes.string = "Ingredientes: "
+        p_ingredientes.append(strong_ingredientes)
+        p_ingredientes.append(receta.ingredientes)
+        receta_div.append(p_ingredientes)
+
+        # Preparación de la receta
+        p_preparacion = soup.new_tag("p")
+        strong_preparacion = soup.new_tag("strong")
+        strong_preparacion.string = "Preparación: "
+        p_preparacion.append(strong_preparacion)
+        p_preparacion.append(receta.preparacion)
+        receta_div.append(p_preparacion)
+
         # Insertar la receta en el contenedor
         recetas_container.append(receta_div)
 
