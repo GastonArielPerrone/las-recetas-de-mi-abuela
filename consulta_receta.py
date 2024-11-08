@@ -28,7 +28,7 @@ class Recetas(Model):
 db.connect()
 
 # Obtener las recetas, ordenadas por fecha de publicación (más recientes primero)
-recetas = Recetas.select().order_by(Receta.fecha_publicacion.desc())
+recetas = Recetas.select().order_by(Recetas.fecha_publicacion.desc())
 
 # Abrir el archivo HTML existente
 with open('Consultar_recetas.html', 'r', encoding='utf-8') as file:
