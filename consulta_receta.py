@@ -13,7 +13,7 @@ class Categoria(Model):
         database = db
 
 # Definir el modelo de la tabla Recetas
-class Receta(Model):
+class Recetas(Model):
     nombre_receta = CharField()
     imagen = CharField()  # Ruta de la imagen
     ingredientes = TextField()  # Lista de ingredientes (puede ser texto)
@@ -28,7 +28,7 @@ class Receta(Model):
 db.connect()
 
 # Obtener las recetas, ordenadas por fecha de publicación (más recientes primero)
-recetas = Receta.select().order_by(Receta.fecha_publicacion.desc())
+recetas = Recetas.select().order_by(Receta.fecha_publicacion.desc())
 
 # Abrir el archivo HTML existente
 with open('Consultar_recetas.html', 'r', encoding='utf-8') as file:
