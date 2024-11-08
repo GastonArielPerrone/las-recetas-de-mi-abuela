@@ -1,6 +1,6 @@
 from peewee import *
 from datetime import datetime
-from bs4 import BeautifulSoup # type: ignore
+from bs4 import BeautifulSoup  # type: ignore
 
 # Configurar la base de datos con Peewee
 db = SqliteDatabase('recetas.db')
@@ -38,8 +38,14 @@ with open('Consultar_recetas.html', 'r', encoding='utf-8') as file:
 soup = BeautifulSoup(html_doc, 'html.parser')
 
 # Encontrar el contenedor donde insertar las recetas
-# Supongamos que tienes un <div id="recetas-container"></div> en tu HTML
 recetas_container = soup.find(id="recetas-container")
+
+# Verificar si el contenedor fue encontrado
+if recetas_container is None:
+    print("Error: No se encontró el contenedor 'recetas-container'.")
+    # Si no existe, crearlo
+    recetas_container = soup.new_tag("div", id="recetas-container")
+    soup.body.append(recetas_container)
 
 # Si no hay recetas en la base de datos, agregar el mensaje correspondiente
 if not recetas:
