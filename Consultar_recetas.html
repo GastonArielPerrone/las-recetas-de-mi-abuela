@@ -23,9 +23,25 @@
   <main class="container mt-5">
     <h2 class="text-center">Recetas</h2>
     <div class="row mt-4">
-      <!-- Columna Izquierda (Menú de Categorías y Buscadores) -->
+      <!-- Columna Izquierda (Buscadores y Menú de Categorías) -->
       <div class="col-md-3">
-        <nav class="navbar bg-dark" style="height: 100%;">
+        <!-- Buscadores (por Ingrediente y por Nombre de Receta) -->
+        <div class="mb-4">
+          <div class="mb-3">
+            <label for="ingrediente" class="form-label">Buscar por ingrediente</label>
+            <input type="text" class="form-control" id="ingrediente" placeholder="Ingresa un ingrediente">
+            <button id="buscar-ingrediente" class="btn btn-primary mt-2 w-100">Buscar</button>
+          </div>
+
+          <div class="mb-3">
+            <label for="nombre-receta" class="form-label">Buscar por nombre de receta</label>
+            <input type="text" class="form-control" id="nombre-receta" placeholder="Ingresa el nombre de la receta">
+            <button id="buscar-nombre" class="btn btn-primary mt-2 w-100">Buscar</button>
+          </div>
+        </div>
+
+        <!-- Menú de Categorías -->
+        <nav class="navbar bg-dark p-3">
           <div class="container-fluid flex-column">
             <a class="navbar-brand text-white mb-2" href="#">Categorías</a>
             <ul class="nav flex-column">
@@ -47,20 +63,6 @@
             </ul>
           </div>
         </nav>
-
-        <!-- Buscador por Ingrediente -->
-        <div class="mb-3 mt-4">
-          <label for="ingrediente" class="form-label text-white">Buscar por ingrediente</label>
-          <input type="text" class="form-control" id="ingrediente" placeholder="Ingresa un ingrediente">
-          <button id="buscar-ingrediente" class="btn btn-primary mt-2 w-100">Buscar</button>
-        </div>
-
-        <!-- Buscador por Nombre de Receta -->
-        <div class="mb-3">
-          <label for="nombre-receta" class="form-label text-white">Buscar por nombre de receta</label>
-          <input type="text" class="form-control" id="nombre-receta" placeholder="Ingresa el nombre de la receta">
-          <button id="buscar-nombre" class="btn btn-primary mt-2 w-100">Buscar</button>
-        </div>
       </div>
 
       <!-- Columna Derecha (Contenido de Recetas) -->
