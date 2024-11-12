@@ -35,43 +35,50 @@ for categoria in categorias:
     
     # Crear el contenido HTML básico con BeautifulSoup
     soup = BeautifulSoup("<html><body></body></html>", 'html.parser')
-    
-    # Ahora estamos seguros de que <body> existe
-    assert soup.body is not None  # Aseguramos que <body> existe al crear el soup
-    
-    # Crear el encabezado
-    header = soup.new_tag("h1")
-    header.string = f"Recetas de {categoria.nombre_categoria}"
-    soup.body.append(header)
 
-    # Crear el subtítulo con el nombre de la categoría seleccionada
-    subtitle = soup.new_tag("h2")
-    subtitle.string = f"Categoría: {categoria.nombre_categoria}"
-    soup.body.append(subtitle)
+    # Verificar si body existe, si no lo creamos
+    body = soup.body
+    if body is None:
+        body = soup.new_tag('body')
+        soup.append(body)  # Aseguramos que body sea parte del HTML
+
+    # Header con el logo y título principal
+    header = soup.new_tag("header", attrs={"class": "text-center py-5"})
+    logo_img = soup.new_tag("img", alt="Logo de Las recetas de mi abuela", src="content/abuela_cocina.png", width="210")
+    header.append(logo_img)
+    title = soup.new_tag("h1", class_="mt-3")
+    title.string = "Las recetas de mi abuela"
+    header.append(title)
+    body.append(header)  # Añadimos el header al body
     
+    # Crear el subtítulo con el nombre de la categoría seleccionada
+    subtitle = soup.new_tag("h2", class_="text-center mt-3")
+    subtitle.string = f"Recetas de {categoria.nombre_categoria}"
+    body.append(subtitle)
+
     # Crear el menú de categorías
-    nav = soup.new_tag("nav")
-    ul = soup.new_tag("ul")
+    nav = soup.new_tag("nav", attrs={"class": "navbar bg-dark p-3"})
+    ul = soup.new_tag("ul", attrs={"class": "nav flex-column"})
     
     # Agregar las categorías al menú de navegación
     for cat in categorias:
-        li = soup.new_tag("li")
-        a = soup.new_tag("a", href=f"{cat.nombre_categoria.lower().replace(' ', '_')}.html")
+        li = soup.new_tag("li", attrs={"class": "nav-item"})
+        a = soup.new_tag("a", href=f"{cat.nombre_categoria.lower().replace(' ', '_')}.html", attrs={"class": "nav-link text-white"})
         a.string = cat.nombre_categoria
         li.append(a)
         ul.append(li)
     
     nav.append(ul)
-    soup.body.append(nav)
-    
+    body.append(nav)
+
     # Obtener las recetas de esta categoría
     recetas_categoria = Recetas.select().where(Recetas.id_categoria == categoria).order_by(Recetas.fecha_publicacion.desc())
     
     # Verificar si hay recetas para esta categoría
     if not recetas_categoria.exists():
         no_recetas_message = soup.new_tag("p")
-        no_recetas_message.string = f"¡Lo siento! La categoría {categoria.nombre_categoria} no tiene receta."
-        soup.body.append(no_recetas_message)
+        no_recetas_message.string = f"¡Lo siento! La categoría {categoria.nombre_categoria} no tiene recetas disponibles."
+        body.append(no_recetas_message)
     else:
         # Intentar encontrar el contenedor de recetas
         recetas_container = soup.find(id="recetas-container")
@@ -79,14 +86,14 @@ for categoria in categorias:
         # Si no existe el contenedor, lo creamos
         if recetas_container is None:
             recetas_container = soup.new_tag("div", id="recetas-container")
-            soup.body.append(recetas_container)  # Aseguramos que el contenedor sea parte del body
+            body.append(recetas_container)  # Aseguramos que el contenedor sea parte del body
 
         # Agregar las recetas al contenedor
         for receta in recetas_categoria:
             receta_div = soup.new_tag("div", attrs={"class": "receta"})
             
             # Título de la receta
-            h2_tag = soup.new_tag("h2")
+            h2_tag = soup.new_tag("h3")
             h2_tag.string = receta.nombre_receta
             receta_div.append(h2_tag)
             
