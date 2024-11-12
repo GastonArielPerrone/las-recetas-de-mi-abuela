@@ -43,6 +43,11 @@ for categoria in categorias:
     header = soup.new_tag("h1")
     header.string = f"Recetas de {categoria.nombre_categoria}"
     soup.body.append(header)
+
+    # Crear el subtítulo con el nombre de la categoría seleccionada
+    subtitle = soup.new_tag("h2")
+    subtitle.string = f"Categoría: {categoria.nombre_categoria}"
+    soup.body.append(subtitle)
     
     # Crear el menú de categorías
     nav = soup.new_tag("nav")
@@ -65,7 +70,7 @@ for categoria in categorias:
     # Verificar si hay recetas para esta categoría
     if not recetas_categoria.exists():
         no_recetas_message = soup.new_tag("p")
-        no_recetas_message.string = f"No hay recetas disponibles para la categoría {categoria.nombre_categoria}."
+        no_recetas_message.string = f"¡Lo siento! La categoría {categoria.nombre_categoria} no tiene receta."
         soup.body.append(no_recetas_message)
     else:
         # Intentar encontrar el contenedor de recetas
