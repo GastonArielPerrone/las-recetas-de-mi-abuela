@@ -1,5 +1,5 @@
-from flask import Flask, request, redirect, url_for, render_template
-from peewee import SqliteDatabase, Model, AutoField, CharField, ForeignKeyField, DateField, IntegrityError, DoesNotExist
+from flask import Flask, request, redirect, url_for, render_template, jsonify
+from peewee import SqliteDatabase, Model, AutoField, CharField, ForeignKeyField, DateField, IntegrityError, DoesNotExist, TextField
 from datetime import date, datetime
 
 # Inicializar la aplicación y la base de datos
@@ -20,6 +20,9 @@ class Recetas(BaseModel):
     id_receta = AutoField()
     nombre_receta = CharField()
     id_categoria = ForeignKeyField(Categorias, backref='recetas')
+    ingredientes = TextField()  # Agregar ingredientes
+    preparacion = TextField()   # Agregar preparación
+    imagen = CharField(null=True)  # Agregar imagen, si la necesitas
     fecha_publicacion = DateField(default=date.today)
 
 # Crear las tablas
@@ -56,10 +59,12 @@ def cargar_receta():
         Recetas.create(
             nombre_receta=nombre_receta,
             id_categoria=categoria.id_categoria,  # Asignación del id de la categoría
+            ingredientes=ingredientes,  # Guardar los ingredientes
+            preparacion=preparacion,    # Guardar la preparación
             fecha_publicacion=date.today()
         )
         
-        return redirect(url_for('cargar_receta'))  # Redirigir después de la carga exitosa
+        return redirect(url_for('cargar_receta_form'))  # Redirigir después de la carga exitosa
     
     except DoesNotExist:
         return "Error: La categoría seleccionada no existe en la base de datos.", 400
@@ -67,6 +72,29 @@ def cargar_receta():
         return "Error: No se pudo guardar la receta, por favor verifica los datos ingresados.", 400
     except Exception as e:
         return f"Error inesperado: {str(e)}", 500
+    
+@app.route('/recetas/<categoria>', methods=['GET'])
+def obtener_recetas(categoria):
+    try:
+        # Buscar las recetas que pertenecen a la categoría
+        categoria_obj = Categorias.get(Categorias.nombre_categoria == categoria)
+        recetas = Recetas.select().where(Recetas.id_categoria == categoria_obj.id_categoria)
+        
+        # Si no hay recetas para esa categoría
+        if not recetas:
+            return jsonify({'recetas': []})  # Devuelve una lista vacía si no hay recetas
+       
+        # Crear una lista de diccionarios con las recetas
+        recetas_data = [{
+            'nombre_receta': receta.nombre_receta,
+            'imagen': receta.imagen,  # Asegúrate de tener la imagen en el modelo de Recetas
+            'ingredientes': receta.ingredientes,
+            'preparacion': receta.preparacion
+        } for receta in recetas]
+        
+        return jsonify({'recetas': recetas_data})
+    except DoesNotExist:
+        return jsonify({'recetas': []})  # Si la categoría no existe, devolver una lista vacía
 
 # Página principal de carga de recetas
 @app.route('/')
