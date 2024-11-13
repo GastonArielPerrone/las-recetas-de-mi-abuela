@@ -27,7 +27,7 @@ class Recetas(Model):
 # Conectar a la base de datos
 db.connect()
 
-@app.route('/cargar_receta', methods=['GET'])
+@app.route('/recetas/todas_las_recetas', methods=['GET'])
 def obtener_todas_las_recetas():
     recetas = Recetas.select().join(Categorias).order_by(Recetas.fecha_publicacion.desc())
     recetas_list = [{
@@ -38,7 +38,7 @@ def obtener_todas_las_recetas():
     } for receta in recetas]
     return jsonify({'recetas': recetas_list})
 
-@app.route('/cargar_receta', methods=['GET'])
+@app.route('/recetas/<categoria>', methods=['GET'])
 def obtener_recetas_por_categoria(categoria):
     categoria_obj = Categorias.get_or_none(Categorias.nombre_categoria == categoria.replace('_', ' ').title())
     if categoria_obj:
