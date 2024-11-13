@@ -72,7 +72,7 @@ def cargar_receta():
 @app.route('/')
 def cargar_receta_form():
     categorias = Categorias.select()
-    return render_template('formulario_receta.html', categorias=categorias)
+    return render_template('Carga_de_receta.html', categorias=categorias)
 
 if __name__ == '__main__':
     app.run(debug=True)
