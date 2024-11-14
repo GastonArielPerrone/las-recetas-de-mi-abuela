@@ -33,3 +33,27 @@ footer {
 .nav-item:hover {
     background-color: #333333; /* Un poco más claro que #000000 */
 }
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem; /* Reducir tamaño de los encabezados en dispositivos móviles */
+    }
+    p {
+        font-size: 1rem; /* Ajustar el tamaño del texto en dispositivos pequeños */
+    }
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Cambiar a un color más destacado */
+    color: #ffffff; /* Asegurarse de que el texto sea visible */
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem; /* Agregar espacio entre los párrafos */
+}
+
+img {
+    max-width: 100%;
+    height: auto; /* Mantener las proporciones de las imágenes */
+}
