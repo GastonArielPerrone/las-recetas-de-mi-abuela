@@ -64,7 +64,7 @@ def cargar_receta():
             fecha_publicacion=date.today()
         )
         
-        return redirect(url_for('cargar_receta_form'))  # Redirigir después de la carga exitosa
+        return redirect(url_for('Carga_de_receta.html'))  # Redirigir después de la carga exitosa.
     
     except DoesNotExist:
         return "Error: La categoría seleccionada no existe en la base de datos.", 400
