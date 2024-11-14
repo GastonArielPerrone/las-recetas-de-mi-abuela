@@ -20,4 +20,4 @@ types-Jinja2==2.11.9
 types-MarkupSafe==1.1.10
 types-peewee==3.17.7.20241017
 types-Werkzeug==1.0.9
-Werkzeug==3.1.1
+Werkzeug==2.3.8
