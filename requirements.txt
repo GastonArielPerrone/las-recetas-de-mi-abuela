@@ -7,7 +7,7 @@ Flask-Cors==5.0.0
 gunicorn==23.0.0
 itsdangerous==2.2.0
 Jinja2==3.1.4
-MarkupSafe==3.0.2
+MarkupSafe==2.1.1
 packaging==24.2
 peewee==3.17.7
 peewee-migrate==1.13.0
