@@ -33,7 +33,7 @@ class Recetas(Model):
 # Conectar a la base de datos
 db.connect()
 
-@app.route('/recetas/todas_las_recetas', methods=['GET'])
+@app.route('/recetas/todas-las-recetas', methods=['GET'])
 def obtener_todas_las_recetas():
     recetas = Recetas.select().join(Categorias).order_by(Recetas.fecha_publicacion.desc())
     recetas_list = [{
