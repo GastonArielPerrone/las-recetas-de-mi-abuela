@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Función para cargar recetas por categoría
   function cargarRecetas(categoria) {
-    fetch(`http://localhost:5000/recetas/${categoria}`)
+    fetch('http://localhost:8000/recetas/todas_las_recetas')
       .then(response => response.json())
       .then(data => {
         const recetasContainer = document.getElementById("recetas-container");
