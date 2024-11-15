@@ -5,6 +5,9 @@ from flask_cors import CORS # type: ignore
 
 app = Flask(__name__)
 
+def home():
+    return "Bienvenid@ a la API de todas las recetas."
+
 # Configuración de la base de datos
 db = SqliteDatabase('recetas.db')
 
