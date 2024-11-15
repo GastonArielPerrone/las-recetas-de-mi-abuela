@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from peewee import *
 from datetime import datetime
-from flask_cors import CORS # type: ignore
+from flask_cors import CORS
 
 app = Flask(__name__)
 
