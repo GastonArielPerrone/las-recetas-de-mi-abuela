@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from peewee import *
-from datetime import datetime
+from datetime import datetime, date
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -19,12 +19,13 @@ class Categorias(Model):
         database = db
 
 class Recetas(Model):
+    id_receta = AutoField()
     nombre_receta = CharField()
-    imagen = CharField()
-    ingredientes = TextField()
-    preparacion = TextField()
     id_categoria = ForeignKeyField(Categorias, backref='recetas')
-    fecha_publicacion = DateTimeField(default=datetime.now)
+    ingredientes = TextField()  # Agregar ingredientes
+    preparacion = TextField()   # Agregar preparación
+    imagen = CharField(null=True)  # Agregar imagen, si la necesitas
+    fecha_publicacion = DateField(default=date.today)
 
     class Meta:
         database = db
