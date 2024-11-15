@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Función para cargar recetas por categoría
   function cargarRecetas(categoria) {
-    fetch('http://127.0.0.1:5000/recetas/todas_las_recetas')
+    fetch('http://127.0.0.1:5000/recetas/todas-las-recetas')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error en la respuesta: ${response.status} ${response.statusText}`);
