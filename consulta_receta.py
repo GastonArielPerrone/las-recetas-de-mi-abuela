@@ -13,8 +13,8 @@ def home():
 db = SqliteDatabase('recetas.db')
 
 class Categorias(Model):
-    nombre_categoria = CharField()
-
+    id_categoria = AutoField()
+    nombre_categoria = CharField(unique=True)
     class Meta:
         database = db
 
