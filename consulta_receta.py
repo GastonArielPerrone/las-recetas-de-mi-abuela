@@ -5,6 +5,7 @@ from flask_cors import CORS # type: ignore
 
 app = Flask(__name__)
 
+app.route('/')
 def home():
     return "Bienvenid@ a la API de todas las recetas."
 
