@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => {
             console.error('Error al cargar las recetas:', error);
             const recetasContainer = document.getElementById("recetas-container");
-            recetasContainer.innerHTML = `<p>Error al cargar las recetas: ${error.message}</p>`;
+            recetasContainer.innerHTML = `<p>Error al cargar las recetas:</p>`;
         });
 }
 }
