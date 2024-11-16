@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, jsonify
+from waitress import serve
 from peewee import *
 from datetime import date
 
@@ -80,4 +81,4 @@ def buscar_por_categoria():
         return render_template('Consultar_recetas.html', mensaje="¡Lo siento! No se encuentra la receta deseada.")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=5000)
