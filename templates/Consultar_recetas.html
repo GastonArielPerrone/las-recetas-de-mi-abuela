@@ -109,5 +109,39 @@
 
   <!-- Bootstrap 5 JS (incluye Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Función para hacer la consulta a la API y mostrar los resultados
+    async function obtenerRecetas() {
+      const response = await fetch('https://nombre-app.onrender.com/api/recetas');
+      const data = await response.json();
+
+      const resultadoDiv = document.getElementById('resultado-recetas');
+      resultadoDiv.innerHTML = '';  // Limpiar los resultados anteriores
+
+      if (data.recetas.length === 0) {
+        resultadoDiv.innerHTML = '<h3 class="text-danger">¡Lo siento! No se encuentra la receta deseada.</h3>';
+      } else {
+        data.recetas.forEach(receta => {
+          const recetaHTML = `
+            <div class="col-md-4">
+              <div class="card mb-4">
+                <img src="${receta.imagen || '/content/default_recipe.jpg'}" class="card-img-top" alt="Imagen de ${receta.nombre_receta}">
+                <div class="card-body">
+                  <h5 class="card-title">${receta.nombre_receta}</h5>
+                  <p class="card-text"><strong>Ingredientes:</strong> ${receta.ingredientes}</p>
+                  <p class="card-text"><strong>Preparación:</strong> ${receta.preparacion}</p>
+                  <p class="card-text"><small class="text-muted">Publicado el ${receta.fecha_publicacion}</small></p>
+                </div>
+              </div>
+            </div>
+          `;
+          resultadoDiv.innerHTML += recetaHTML;
+        });
+      }
+    }
+
+    // Llamar a la función cuando la página cargue
+    window.onload = obtenerRecetas;
+  </script>
 </body>
 </html>
