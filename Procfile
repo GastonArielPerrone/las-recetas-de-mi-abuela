@@ -1,1 +1,1 @@
-web: python carga_consulta_receta.py
+web: gunicorn carga_consulta_receta.py:app
