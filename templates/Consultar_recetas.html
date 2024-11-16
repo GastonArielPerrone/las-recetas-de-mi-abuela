@@ -41,7 +41,7 @@
         <!-- Menú de Categorías -->
         <nav class="navbar bg-dark p-3">
           <div class="container-fluid flex-column">
-            <a class="navbar-brand text-white mb-2" href="#">Categorías</a>
+            <a href="/recetas/{{ categoria|replace(' ', '_').lower() }}" class="nav-link text-white">{{ categoria }}</a>
             <ul class="nav flex-column" id="menu-categorias">
               <li class="nav-item"><a class="nav-link text-white" href="#" id="todas-recetas">Todas las recetas</a></li>
               <!-- Otras categorías se añadirán desde el backend -->
@@ -53,9 +53,23 @@
       <!-- Columna Derecha (Contenido de Recetas) -->
       <div class="col-md-9">
         <div class="p-4 bg-light rounded" id="recetas-container">
-          <p id="mensaje-inicial">¡Cargando recetas...</p>
+          {% if recetas %}
+            {% for receta in recetas %}
+              <div class="receta">
+                <h3>{{ receta.nombre_receta }}</h3>
+                {% if receta.imagen %}
+                  <img src="{{ receta.imagen }}" alt="Imagen de {{ receta.nombre_receta }}" width="200">
+                {% endif %}
+                <p><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+                <p><strong>Preparación:</strong> {{ receta.preparacion }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>{{ mensaje or "¡Lo siento! No hay recetas cargadas todavía." }}</p>
+          {% endif %}
         </div>
-      </div>
+    </div>
+</div>
     </div>
   </main>
 
