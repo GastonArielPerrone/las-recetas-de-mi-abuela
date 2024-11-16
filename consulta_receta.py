@@ -52,7 +52,7 @@ def mostrar_recetas():
     try:
         # Suponiendo que ya tienes una base de datos con recetas
         recetas = Recetas.select()  # Obtén las recetas de la base de datos
-        return render_template('Consultar_receta.html', recetas=recetas)
+        return render_template('Consultar_recetas.html', recetas=recetas)
     except Exception as e:
         return f"Error inesperado: {str(e)}", 500
 

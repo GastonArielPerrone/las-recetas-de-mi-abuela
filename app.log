@@ -5,3 +5,14 @@
 2024-11-16 12:32:54,968 - werkzeug - WARNING -  * Debugger is active!
 2024-11-16 12:32:54,973 - werkzeug - INFO -  * Debugger PIN: 958-520-592
 2024-11-16 12:33:26,974 - werkzeug - INFO - 127.0.0.1 - - [16/Nov/2024 12:33:26] "GET / HTTP/1.1" 200 -
+2024-11-16 12:48:06,772 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-16 12:48:06,775 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-11-16 12:48:06,777 - werkzeug - INFO -  * Restarting with stat
+2024-11-16 12:48:07,063 - werkzeug - WARNING -  * Debugger is active!
+2024-11-16 12:48:07,068 - werkzeug - INFO -  * Debugger PIN: 958-520-592
+2024-11-16 12:48:14,438 - werkzeug - INFO - 127.0.0.1 - - [16/Nov/2024 12:48:14] "GET / HTTP/1.1" 200 -
+2024-11-16 12:49:50,602 - werkzeug - INFO -  * Detected change in 'F:\\Back up\\Desktop\\Backup\\Particiòn\\Documentos\\Gaston\\Programación\\proyectos\\web-systems\\las-recetas-de-mi-abuela\\consulta_receta.py', reloading
+2024-11-16 12:49:50,675 - werkzeug - INFO -  * Restarting with stat
+2024-11-16 12:49:50,984 - werkzeug - WARNING -  * Debugger is active!
+2024-11-16 12:49:50,989 - werkzeug - INFO -  * Debugger PIN: 958-520-592
