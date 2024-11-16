@@ -1,6 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, request, redirect, url_for, render_template, jsonify
 from peewee import *
-from datetime import datetime
+from datetime import date, datetime
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -13,18 +13,19 @@ def home():
 db = SqliteDatabase('recetas.db')
 
 class Categorias(Model):
-    nombre_categoria = CharField()
-
+    id_categoria = AutoField()
+    nombre_categoria = CharField(unique=True)
     class Meta:
         database = db
 
 class Recetas(Model):
+    id_receta = AutoField()
     nombre_receta = CharField()
-    imagen = CharField()
-    ingredientes = TextField()
-    preparacion = TextField()
     id_categoria = ForeignKeyField(Categorias, backref='recetas')
-    fecha_publicacion = DateTimeField(default=datetime.now)
+    ingredientes = TextField()  # Agregar ingredientes
+    preparacion = TextField()   # Agregar preparación
+    imagen = CharField(null=True)  # Agregar imagen, si la necesitas
+    fecha_publicacion = DateField(default=date.today)
 
     class Meta:
         database = db
@@ -32,31 +33,23 @@ class Recetas(Model):
 # Conectar a la base de datos
 db.connect()
 
-@app.route('/recetas/todas_las_recetas', methods=['GET'])
-def obtener_todas_las_recetas():
-    recetas = Recetas.select().join(Categorias).order_by(Recetas.fecha_publicacion.desc())
-    recetas_list = [{
-        'nombre_receta': receta.nombre_receta,
-        'imagen': receta.imagen,
-        'ingredientes': receta.ingredientes,
-        'preparacion': receta.preparacion
-    } for receta in recetas]
-    return jsonify({'recetas': recetas_list})
-
 @app.route('/recetas/<categoria>', methods=['GET'])
-def obtener_recetas_por_categoria(categoria):
-    categoria_obj = Categorias.get_or_none(Categorias.nombre_categoria == categoria.replace('_', ' ').title())
-    if categoria_obj:
-        recetas = Recetas.select().where(Recetas.id_categoria == categoria_obj)
-        recetas_list = [{
-            'nombre_receta': receta.nombre_receta,
-            'imagen': receta.imagen,
-            'ingredientes': receta.ingredientes,
-            'preparacion': receta.preparacion
-        } for receta in recetas]
-        return jsonify({'recetas': recetas_list})
-    else:
-        return jsonify({'recetas': []})
+@app.route('/recetas', defaults={'categoria': None}, methods=['GET'])
+def mostrar_recetas(categoria):
+    try:
+        # Si no se proporciona una categoría, mostrar todas las recetas
+        if not categoria or categoria.lower() == 'todas_las_recetas':
+            recetas = Recetas.select().order_by(Recetas.fecha_publicacion.desc())
+        else:
+            # Filtrar por categoría
+            categoria_obj = Categorias.get_or_none(Categorias.nombre_categoria == categoria.replace('_', ' ').title())
+            if not categoria_obj:
+                return render_template('Consultar_receta.html', recetas=[], mensaje="¡Lo siento! No hay recetas cargadas todavía.")
+            
+            recetas = Recetas.select().where(Recetas.id_categoria == categoria_obj.id_categoria)
 
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+        # Pasar las recetas al template
+        return render_template('Consultar_receta.html', recetas=recetas, mensaje=None)
+
+    except Exception as e:
+        return f"Error inesperado: {str(e)}", 500
