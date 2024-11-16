@@ -73,6 +73,26 @@
 
       <!-- Columna Derecha (Contenido de Recetas) -->
       <div class="col-md-9">
+        {% if recetas %}
+          <h3>Resultados de la búsqueda:</h3>
+          <div class="row">
+            {% for receta in recetas %}
+              <div class="col-md-4">
+                <div class="card mb-4">
+                  <img src="{{ receta.imagen or '/content/default_recipe.jpg' }}" class="card-img-top" alt="Imagen de {{ receta.nombre_receta }}">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ receta.nombre_receta }}</h5>
+                    <p class="card-text"><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+                    <p class="card-text"><strong>Preparación:</strong> {{ receta.preparacion }}</p>
+                    <p class="card-text"><small class="text-muted">Publicado el {{ receta.fecha_publicacion }}</small></p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% elif mensaje %}
+          <h3 class="text-danger">{{ mensaje }}</h3>
+        {% endif %}
       </div>
   </main>
 
