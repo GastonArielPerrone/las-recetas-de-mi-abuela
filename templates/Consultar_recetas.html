@@ -26,43 +26,50 @@
       <!-- Columna Izquierda (Menú de Categorías) -->
       <div class="col-md-3">
         <div class="mb-4">
-          <div class="mb-3">
-            <label for="ingrediente" class="form-label">Buscar por ingrediente</label>
-            <input type="text" class="form-control" id="ingrediente" placeholder="Ingresa un ingrediente">
-            <button id="buscar-ingrediente" class="btn btn-primary mt-2 w-100">Buscar</button>
-          </div>
+          <!-- Formulario para buscar por ingrediente -->
+<form id="form-buscar-ingrediente">
+  <div class="mb-3">
+    <label for="ingrediente" class="form-label">Buscar por ingrediente</label>
+    <input type="text" class="form-control" id="ingrediente" placeholder="Ingresa un ingrediente" name="ingrediente">
+    <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
+  </div>
+</form>
 
-          <div class="mb-3">
-            <label for="nombre-receta" class="form-label">Buscar por nombre de receta</label>
-            <input type="text" class="form-control" id="nombre-receta" placeholder="Ingresa el nombre de la receta">
-            <button id="buscar-nombre" class="btn btn-primary mt-2 w-100">Buscar</button>
-          </div>
-        </div>
-        <!-- Menú de Categorías -->
-        <div class="form-group">
-          <label for="category">Categoría</label>
-          <select class="form-control" id="category" name="category" required>
-              <option value="" disabled selected>Selecciona una categoría</option>
-              <option value="Todas las categorias">Todas las categorías</option>
-              <option value="Entradas">Entradas</option>
-              <option value="Platos principales">Platos principales</option>
-              <option value="Postres">Postres</option>
-              <option value="Bebidas">Bebidas</option>
-              <option value="Sopas">Sopas</option>
-              <option value="Panadería">Panadería</option>
-              <option value="Pastelería">Pastelería</option>
-              <option value="Galletas">Galletas</option>
-              <option value="Salsas">Salsas</option>
-              <option value="Ensaladas">Ensaladas</option>
-              <option value="Guarniciones">Guarniciones</option>
-              <option value="Vegetarianas">Vegetarianas</option>
-              <option value="Sin gluten">Sin gluten</option>
-              <option value="Apto para diabéticos">Apto para diabéticos</option>
-              <!-- Aquí puedes agregar más categorías según sea necesario -->
-          </select>
-          <button id="buscar-nombre" class="btn btn-primary mt-2 w-100">Buscar</button>
-      </div>
-      </div>
+<!-- Formulario para buscar por nombre de receta -->
+<form id="form-buscar-nombre">
+  <div class="mb-3">
+    <label for="nombre-receta" class="form-label">Buscar por nombre de receta</label>
+    <input type="text" class="form-control" id="nombre-receta" placeholder="Ingresa el nombre de la receta" name="nombre-receta">
+    <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
+  </div>
+</form>
+
+<!-- Formulario para seleccionar categoría -->
+<form id="form-buscar-categoria">
+  <div class="form-group">
+    <label for="category">Categoría</label>
+    <select class="form-control" id="category" name="category" required>
+        <option value="" disabled selected>Selecciona una categoría</option>
+        <option value="Todas las categorias">Todas las categorías</option>
+        <option value="Entradas">Entradas</option>
+        <option value="Platos principales">Platos principales</option>
+        <option value="Postres">Postres</option>
+        <option value="Bebidas">Bebidas</option>
+        <option value="Sopas">Sopas</option>
+        <option value="Panadería">Panadería</option>
+        <option value="Pastelería">Pastelería</option>
+        <option value="Galletas">Galletas</option>
+        <option value="Salsas">Salsas</option>
+        <option value="Ensaladas">Ensaladas</option>
+        <option value="Guarniciones">Guarniciones</option>
+        <option value="Vegetarianas">Vegetarianas</option>
+        <option value="Sin gluten">Sin gluten</option>
+        <option value="Apto para diabéticos">Apto para diabéticos</option>
+    </select>
+    <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
+  </div>
+</form>
+</div>
 
       <!-- Columna Derecha (Contenido de Recetas) -->
       <div class="col-md-9">
