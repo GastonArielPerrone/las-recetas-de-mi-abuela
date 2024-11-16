@@ -64,7 +64,7 @@ def recetas_por_categoria(categoria):
     try:
         categoria_obj = Categorias.get_or_none(Categorias.nombre_categoria == categoria.replace('_', ' ').title())
         if not categoria_obj:
-            return render_template('Consultar_receta.html', recetas_html="", mensaje="¡Lo siento! No hay recetas cargadas para esta categoría.")
+            return render_template('Consultar_recetas.html', recetas_html="", mensaje="¡Lo siento! No hay recetas cargadas para esta categoría.")
         
         recetas = Recetas.select().where(Recetas.id_categoria == categoria_obj.id_categoria).order_by(Recetas.fecha_publicacion.desc())
         
