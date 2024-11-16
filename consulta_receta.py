@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, url_for, render_template, jsonify
 from peewee import *
 from datetime import date
 from flask_cors import CORS
+import logging
 
 app = Flask(__name__)
 CORS(app)
@@ -30,6 +31,15 @@ class Recetas(Model):
 
 # Conectar a la base de datos
 db.connect()
+
+logging.basicConfig(
+    level=logging.DEBUG,  # Puedes usar DEBUG, INFO, WARNING, ERROR, CRITICAL
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Imprime los logs en la consola
+        logging.FileHandler('app.log')  # También guarda los logs en un archivo llamado app.log
+    ]
+)
 
 @app.route('/')
 def home():
