@@ -57,3 +57,16 @@ img {
     max-width: 100%;
     height: auto; /* Mantener las proporciones de las imágenes */
 }
+
+.card-title {
+    font-size: 1.5rem;
+    color: #333;
+}
+.card-text {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+.text-danger {
+    color: red;
+    font-weight: bold;
+}
