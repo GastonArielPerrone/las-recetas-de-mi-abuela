@@ -47,9 +47,23 @@
         <form id="form-buscar-categoria">
           <div class="form-group">
             <label for="category">Categoría</label>
-            <select class="form-control" id="category" name="categoria" required>
-              <option value="" disabled selected>Selecciona una categoría</option>
-              <!-- Agregar opciones de categorías aquí -->
+            <select class="form-control" id="category" name="category" required>
+                <option value="" disabled selected>Selecciona una categoría</option>
+                <option value="Entradas">Entradas</option>
+                <option value="Platos principales">Platos principales</option>
+                <option value="Postres">Postres</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Sopas">Sopas</option>
+                <option value="Panadería">Panadería</option>
+                <option value="Pastelería">Pastelería</option>
+                <option value="Galletas">Galletas</option>
+                <option value="Salsas">Salsas</option>
+                <option value="Ensaladas">Ensaladas</option>
+                <option value="Guarniciones">Guarniciones</option>
+                <option value="Vegetarianas">Vegetarianas</option>
+                <option value="Sin gluten">Sin gluten</option>
+                <option value="Apto para diabéticos">Apto para diabéticos</option>
+                <!-- Aquí puedes agregar más categorías según sea necesario -->
             </select>
             <button type="button" class="btn btn-primary mt-2 w-100" onclick="buscarPorCategoria()">Buscar</button>
           </div>
