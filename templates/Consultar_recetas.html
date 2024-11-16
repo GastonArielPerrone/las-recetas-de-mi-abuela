@@ -47,27 +47,12 @@
         <form id="form-buscar-categoria">
           <div class="form-group">
             <label for="category">Categoría</label>
-            <select class="form-control" id="category" name="category" required>
-                <option value="" disabled selected>Selecciona una categoría</option>
-                <option value="Entradas">Entradas</option>
-                <option value="Platos principales">Platos principales</option>
-                <option value="Postres">Postres</option>
-                <option value="Bebidas">Bebidas</option>
-                <option value="Sopas">Sopas</option>
-                <option value="Panadería">Panadería</option>
-                <option value="Pastelería">Pastelería</option>
-                <option value="Galletas">Galletas</option>
-                <option value="Salsas">Salsas</option>
-                <option value="Ensaladas">Ensaladas</option>
-                <option value="Guarniciones">Guarniciones</option>
-                <option value="Vegetarianas">Vegetarianas</option>
-                <option value="Sin gluten">Sin gluten</option>
-                <option value="Apto para diabéticos">Apto para diabéticos</option>
-                <!-- Aquí puedes agregar más categorías según sea necesario -->
+            <select class="form-control" id="category" name="categoria" required>
+              <option value="" disabled selected>Selecciona una categoría</option>
+              <!-- Agregar opciones de categorías aquí -->
             </select>
-            <button type="button" class="btn btn-primary mt-2 w-100" onclick="buscarPorNombre()">Buscar</button>
-        </div>
-
+            <button type="button" class="btn btn-primary mt-2 w-100" onclick="buscarPorCategoria()">Buscar</button>
+          </div>
         </form>
       </div>
 
@@ -128,9 +113,11 @@
       const resultadoDiv = document.getElementById('resultado-recetas');
       resultadoDiv.innerHTML = '';  // Limpiar los resultados anteriores
 
+      // Verificar si hay recetas
       if (data.recetas.length === 0) {
-        resultadoDiv.innerHTML = '<h3 class="text-danger">¡Lo siento! No se encuentra la receta deseada.</h3>';
+        resultadoDiv.innerHTML = '<p class="text-danger">¡Lo siento! En este momento no hay recetas cargadas.</p>';
       } else {
+        // Mostrar las recetas si existen
         data.recetas.forEach(receta => {
           const recetaHTML = `
             <div class="col-md-4">
