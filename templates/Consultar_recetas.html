@@ -39,15 +39,28 @@
           </div>
         </div>
         <!-- Menú de Categorías -->
-        <nav class="navbar bg-dark p-3">
-          <div class="container-fluid flex-column">
-            <a href="/recetas/{{ categoria|replace(' ', '_').lower() }}" class="nav-link text-white">{{ categoria }}</a>
-            <ul class="nav flex-column" id="menu-categorias">
-              <li class="nav-item"><a class="nav-link text-white" href="#" id="todas-recetas">Todas las recetas</a></li>
-              <!-- Otras categorías se añadirán desde el backend -->
-            </ul>
-          </div>
-        </nav>
+        <div class="form-group">
+          <label for="category">Categoría</label>
+          <select class="form-control" id="category" name="category" required>
+              <option value="" disabled selected>Selecciona una categoría</option>
+              <option value="Todas las categorias">Todas las categorías</option>
+              <option value="Entradas">Entradas</option>
+              <option value="Platos principales">Platos principales</option>
+              <option value="Postres">Postres</option>
+              <option value="Bebidas">Bebidas</option>
+              <option value="Sopas">Sopas</option>
+              <option value="Panadería">Panadería</option>
+              <option value="Pastelería">Pastelería</option>
+              <option value="Galletas">Galletas</option>
+              <option value="Salsas">Salsas</option>
+              <option value="Ensaladas">Ensaladas</option>
+              <option value="Guarniciones">Guarniciones</option>
+              <option value="Vegetarianas">Vegetarianas</option>
+              <option value="Sin gluten">Sin gluten</option>
+              <option value="Apto para diabéticos">Apto para diabéticos</option>
+              <!-- Aquí puedes agregar más categorías según sea necesario -->
+          </select>
+      </div>
       </div>
 
       <!-- Columna Derecha (Contenido de Recetas) -->
