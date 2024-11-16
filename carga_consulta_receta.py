@@ -81,4 +81,4 @@ def buscar_por_categoria():
         return render_template('Consultar_recetas.html', mensaje="¡Lo siento! No se encuentra la receta deseada.")
 
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
