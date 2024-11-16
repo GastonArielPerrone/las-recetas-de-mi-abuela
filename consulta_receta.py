@@ -54,7 +54,7 @@ def mostrar_recetas():
             recetas_html += str(soup)
 
         # Devolver el HTML procesado al cliente
-        return render_template('Consultar_receta.html', recetas_html=recetas_html, mensaje=None)
+        return render_template('Consultar_recetas.html', recetas_html=recetas_html, mensaje=None)
     
     except Exception as e:
         return f"Error inesperado: {str(e)}", 500
@@ -82,7 +82,7 @@ def recetas_por_categoria(categoria):
             soup = BeautifulSoup(receta_html, 'html.parser')
             recetas_html += str(soup)
 
-        return render_template('Consultar_receta.html', recetas_html=recetas_html, mensaje=None)
+        return render_template('Consultar_recetas.html', recetas_html=recetas_html, mensaje=None)
     
     except Exception as e:
         return f"Error inesperado: {str(e)}", 500
