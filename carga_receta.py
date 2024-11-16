@@ -73,7 +73,7 @@ def cargar_receta():
     except Exception as e:
         return f"Error inesperado: {str(e)}", 500
     
-@app.route('/recetas/<categoria>', methods=['GET'])
+@app.route('/recetas', methods=['GET'])
 def obtener_recetas(categoria):
     try:
         # Buscar las recetas que pertenecen a la categoría

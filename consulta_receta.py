@@ -45,7 +45,7 @@ logging.basicConfig(
 def home():
     return "Bienvenid@ a la API de todas las recetas."
 
-@app.route('/recetas/<categoria>', methods=['GET'])
+@app.route('/recetas', methods=['GET'])
 @app.route('/recetas', defaults={'categoria': None}, methods=['GET'])
 def mostrar_recetas(categoria):
     try:
