@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, jsonify
-from waitress import serve
 from peewee import *
 from datetime import date
 
