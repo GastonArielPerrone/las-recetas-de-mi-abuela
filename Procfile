@@ -1,1 +1,1 @@
-web: python consulta_receta.py
+web: python carga_consulta_receta.py
