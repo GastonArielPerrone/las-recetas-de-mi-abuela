@@ -1,13 +1,10 @@
 from flask import Flask, request, redirect, url_for, render_template, jsonify
 from peewee import *
-from datetime import date, datetime
+from datetime import date
 from flask_cors import CORS
 
 app = Flask(__name__)
-
-app.route('/')
-def home():
-    return "Bienvenid@ a la API de todas las recetas."
+CORS(app)
 
 # Configuración de la base de datos
 db = SqliteDatabase('recetas.db')
@@ -15,6 +12,7 @@ db = SqliteDatabase('recetas.db')
 class Categorias(Model):
     id_categoria = AutoField()
     nombre_categoria = CharField(unique=True)
+    
     class Meta:
         database = db
 
@@ -22,9 +20,9 @@ class Recetas(Model):
     id_receta = AutoField()
     nombre_receta = CharField()
     id_categoria = ForeignKeyField(Categorias, backref='recetas')
-    ingredientes = TextField()  # Agregar ingredientes
-    preparacion = TextField()   # Agregar preparación
-    imagen = CharField(null=True)  # Agregar imagen, si la necesitas
+    ingredientes = TextField()
+    preparacion = TextField()
+    imagen = CharField(null=True)
     fecha_publicacion = DateField(default=date.today)
 
     class Meta:
@@ -32,6 +30,10 @@ class Recetas(Model):
 
 # Conectar a la base de datos
 db.connect()
+
+@app.route('/')
+def home():
+    return "Bienvenid@ a la API de todas las recetas."
 
 @app.route('/recetas/<categoria>', methods=['GET'])
 @app.route('/recetas', defaults={'categoria': None}, methods=['GET'])
@@ -53,3 +55,6 @@ def mostrar_recetas(categoria):
 
     except Exception as e:
         return f"Error inesperado: {str(e)}", 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
