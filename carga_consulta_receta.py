@@ -37,30 +37,34 @@ def agregar_categorias():
         Categorias.get_or_create(nombre_categoria=categoria)
 agregar_categorias()
 
-# Ruta para mostrar el formulario de búsqueda
+# Ruta para mostrar el formulario de búsqueda y todas las recetas con paginación
 @app.route('/')
 def consultar_recetas_form():
-    return render_template('Consultar_recetas.html')
+    page = request.args.get('page', 1, type=int)
+    recetas = Recetas.select().paginate(page, 6)  # Paginación de 6 recetas por página
+    return render_template('Consultar_recetas.html', recetas=recetas)
 
 # Ruta para buscar por ingrediente
 @app.route('/buscar/ingrediente', methods=['POST'])
 def buscar_por_ingrediente():
     ingrediente = request.form.get('ingrediente', '')
     recetas = Recetas.select().where(Recetas.ingredientes.contains(ingrediente))
+    
     if recetas.exists():
-        return render_template('Consultar_recetas.html', recetas=recetas)
+        return render_template('partials/_recetas_resultados.html', recetas=recetas)
     else:
-        return render_template('Consultar_recetas.html', mensaje="¡Lo siento! No se encuentra la receta deseada.")
+        return "<p class='text-danger'>¡Lo siento! No se encuentra la receta deseada.</p>"
 
 # Ruta para buscar por nombre de receta
 @app.route('/buscar/nombre', methods=['POST'])
 def buscar_por_nombre():
-    nombre = request.form.get('nombre-receta', '')
+    nombre = request.form.get('nombre_receta', '')
     recetas = Recetas.select().where(Recetas.nombre_receta.contains(nombre))
+    
     if recetas.exists():
-        return render_template('Consultar_recetas.html', recetas=recetas)
+        return render_template('partials/_recetas_resultados.html', recetas=recetas)
     else:
-        return render_template('Consultar_recetas.html', mensaje="¡Lo siento! No se encuentra la receta deseada.")
+        return "<p class='text-danger'>¡Lo siento! No se encuentra la receta deseada.</p>"
 
 # Ruta para buscar por categoría
 @app.route('/buscar/categoria', methods=['POST'])
@@ -75,9 +79,9 @@ def buscar_por_categoria():
         except DoesNotExist:
             recetas = []
     if recetas:
-        return render_template('Consultar_recetas.html', recetas=recetas)
+        return render_template('partials/_recetas_resultados.html', recetas=recetas)
     else:
-        return render_template('Consultar_recetas.html', mensaje="¡Lo siento! No se encuentra la receta deseada.")
+        return "<p class='text-danger'>¡Lo siento! No se encuentra la receta deseada.</p>"
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
