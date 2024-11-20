@@ -1,0 +1,19 @@
+{
+  "name": "las-recetas-de-mi-abuela",
+  "version": "1.0.0",
+  "description": "",
+  "main": "validation.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaston18121991/las-recetas-de-mi-abuela.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaston18121991/las-recetas-de-mi-abuela/issues"
+  },
+  "homepage": "https://github.com/gaston18121991/las-recetas-de-mi-abuela#readme"
+}
