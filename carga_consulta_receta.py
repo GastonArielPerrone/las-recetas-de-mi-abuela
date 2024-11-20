@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from peewee import *
 from datetime import date
+import os
 
 # Inicializar la aplicación y la base de datos
 app = Flask(__name__)
@@ -83,5 +84,6 @@ def buscar_por_categoria():
     else:
         return "<p class='text-danger'>¡Lo siento! No se encuentra la receta deseada.</p>"
 
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Railway usa la variable de entorno PORT
+    app.run(host="0.0.0.0", port=port)
