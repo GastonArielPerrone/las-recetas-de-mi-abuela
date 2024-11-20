@@ -63,7 +63,6 @@
                 <option value="Vegetarianas">Vegetarianas</option>
                 <option value="Sin gluten">Sin gluten</option>
                 <option value="Apto para diabéticos">Apto para diabéticos</option>
-                <!-- Aquí puedes agregar más categorías según sea necesario -->
             </select>
             <button type="button" class="btn btn-primary mt-2 w-100" onclick="buscarPorCategoria()">Buscar</button>
           </div>
@@ -74,82 +73,9 @@
       <div class="col-md-9">
         <!-- Resultados de recetas -->
         <div id="resultado-recetas">
-          <!-- Los resultados de las recetas aparecerán aquí después de cada búsqueda -->
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="text-center py-4">
-    <p>© 2024 Gastón Ariel Perrone</p>
-  </footer>
-
-  <!-- Bootstrap 5 JS (incluye Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    // Función para buscar por ingrediente
-    function buscarPorIngrediente() {
-      const ingrediente = document.getElementById('ingrediente').value;
-      fetch(`/buscar/ingrediente?ingrediente=${ingrediente}`, { method: 'GET' })
-        .then(response => response.json())
-        .then(data => {
-          mostrarRecetas(data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    // Función para buscar por nombre de receta
-    function buscarPorNombre() {
-      const nombreReceta = document.getElementById('nombre-receta').value;
-      fetch(`/buscar/nombre?nombre_receta=${nombreReceta}`, { method: 'GET' })
-        .then(response => response.json())
-        .then(data => {
-          mostrarRecetas(data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    // Función para buscar por categoría
-    function buscarPorCategoria() {
-      const categoria = document.getElementById('category').value;
-      fetch(`/buscar/categoria?categoria=${categoria}`, { method: 'GET' })
-        .then(response => response.json())
-        .then(data => {
-          mostrarRecetas(data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    // Función que muestra las recetas en el frontend
-    function mostrarRecetas(data) {
-      const resultadoDiv = document.getElementById('resultado-recetas');
-      resultadoDiv.innerHTML = '';  // Limpiar los resultados anteriores
-
-      // Verificar si hay recetas
-      if (data.recetas.length === 0) {
-        resultadoDiv.innerHTML = '<p class="text-danger">¡Lo siento! En este momento no hay recetas cargadas.</p>';
-      } else {
-        // Mostrar las recetas si existen
-        data.recetas.forEach(receta => {
-          const recetaHTML = `
-            <div class="col-md-4">
-              <div class="card mb-4">
-                <img src="${receta.imagen || '/content/default_recipe.jpg'}" class="card-img-top" alt="Imagen de ${receta.nombre_receta}">
-                <div class="card-body">
-                  <h5 class="card-title">${receta.nombre_receta}</h5>
-                  <p class="card-text"><strong>Ingredientes:</strong> ${receta.ingredientes}</p>
-                  <p class="card-text"><strong>Preparación:</strong> ${receta.preparacion}</p>
-                  <p class="card-text"><small class="text-muted">Publicado el ${receta.fecha_publicacion}</small></p>
-                </div>
-              </div>
-            </div>
-          `;
-          resultadoDiv.innerHTML += recetaHTML;
-        });
-      }
-    }
-  </script>
-</body>
-</html>
+          {% if recetas %}
+            <div class="row">
+              {% for receta in recetas %}
+                <div class="col-md-4">
+                  <div class="card mb-4">
+                    <img src="{{ receta.imagen or '/static/default_recipe.jpg'
