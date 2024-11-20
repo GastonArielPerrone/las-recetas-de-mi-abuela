@@ -1,1 +1,0 @@
-web: gunicorn carga_consulta_receta.py:app
