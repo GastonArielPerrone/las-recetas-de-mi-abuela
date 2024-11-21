@@ -33,7 +33,7 @@ def crear_tablas():
 # Insertar las categorías una única vez
 def insertar_categorias():
     categorias = [
-        "Todas las recetas", "Entradas", "Platos principales", "Postres", "Bebidas",
+        "Entradas", "Platos principales", "Postres", "Bebidas",
         "Sopas", "Panadería", "Pastelería", "Galletas", "Salsas", "Ensaladas",
         "Guarniciones", "Vegetarianas", "Sin gluten", "Apto para diabéticos"
     ]
