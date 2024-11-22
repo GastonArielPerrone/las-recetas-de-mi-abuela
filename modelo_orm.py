@@ -1,13 +1,9 @@
 from flask import Flask, render_template, request
 from peewee import *
 from datetime import datetime
-import os
 
-# Cargar la variable de entorno que contiene la ruta de la base de datos
-db_path = os.getenv('DB_PATH', 'recetas.db')
-
-# Conectar a la base de datos SQLite usando la ruta de la variable de entorno
-db = SqliteDatabase(db_path)
+#Creamos la BASE DE DATOS: recetas.db
+db = SqliteDatabase('recetas.db')
 
 # Definir las clases de modelos
 class Categoria(Model):
