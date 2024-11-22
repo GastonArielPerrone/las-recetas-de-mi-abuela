@@ -1,0 +1,7 @@
+[build]
+  functions = "functions"   # Carpeta donde están tus funciones serverless
+  publish = "public"        # Aquí van los archivos estáticos de tu aplicación
+
+[dev]
+  functions = "functions"   # Carpeta de funciones durante el desarrollo
+  publish = "public"
