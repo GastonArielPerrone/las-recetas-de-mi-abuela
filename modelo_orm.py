@@ -30,7 +30,7 @@ def inicializar_db():
     db.connect()
     db.create_tables([Categoria, Receta], safe=True)
     categorias_default = [
-        "Todas las recetas", "Entradas", "Platos principales", "Postres", "Bebidas", 
+        "Entradas", "Platos principales", "Postres", "Bebidas", 
         "Sopas", "Panadería", "Pastelería", "Galletas", "Salsas", "Ensaladas", 
         "Guarniciones", "Vegetarianas", "Sin gluten", "Apto para diabéticos"
     ]
