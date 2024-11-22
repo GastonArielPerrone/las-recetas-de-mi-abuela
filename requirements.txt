@@ -28,3 +28,5 @@ types-waitress==3.0.1.20241030
 tzdata==2024.2
 waitress==3.0.2
 Werkzeug==3.1.1
+mangum==0.10.0    # Esto es para que Flask funcione como función serverless en Netlify
+Pillow==9.0.0      # Si usas manipulación de imágenes
