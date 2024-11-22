@@ -9,9 +9,6 @@ db_path = os.getenv('DB_PATH', 'recetas.db')
 # Conectar a la base de datos SQLite usando la ruta de la variable de entorno
 db = SqliteDatabase(db_path)
 
-# Configurar la base de datos
-db = SqliteDatabase('recetas.db')
-
 # Definir las clases de modelos
 class Categoria(Model):
     id_categoria = AutoField()
