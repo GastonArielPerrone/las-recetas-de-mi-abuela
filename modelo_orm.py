@@ -1,11 +1,17 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from peewee import *
 from datetime import date
+import os
 
 # Configuración de Flask y Base de Datos
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'
 db = SqliteDatabase('recetas.db')
+
+# Carpeta para subir imágenes
+UPLOAD_FOLDER = 'static/uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Modelos de la base de datos
 class BaseModel(Model):
@@ -30,8 +36,8 @@ def inicializar_db():
     db.connect()
     db.create_tables([Categoria, Receta], safe=True)
     categorias_default = [
-        "Entradas", "Platos principales", "Postres", "Bebidas", 
-        "Sopas", "Panadería", "Pastelería", "Galletas", "Salsas", "Ensaladas", 
+        "Entradas", "Platos principales", "Postres", "Bebidas",
+        "Sopas", "Panadería", "Pastelería", "Galletas", "Salsas", "Ensaladas",
         "Guarniciones", "Vegetarianas", "Sin gluten", "Apto para diabéticos"
     ]
     for cat in categorias_default:
@@ -72,22 +78,28 @@ def detalle_receta(id_receta):
 def cargar_receta():
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
-        nombre_receta = request.form.get('nombre_receta')
-        ingredientes = request.form.get('ingredientes')
-        preparacion = request.form.get('preparacion')
-        id_categoria = request.form.get('id_categoria')
-        imagen = request.form.get('imagen') or '/static/default_recipe.jpg'
+        nombre_receta = request.form.get('recipeName')  # Coincide con name="recipeName"
+        ingredientes = request.form.get('ingredients')  # Coincide con name="ingredients"
+        preparacion = request.form.get('preparation')  # Coincide con name="preparation"
+        id_categoria = request.form.get('category')  # Coincide con name="category"
+        imagen = request.files['image']  # Coincide con name="image"
         
-        if not (nombre_receta and ingredientes and preparacion and id_categoria):
+        if not (nombre_receta and ingredientes and preparacion and id_categoria and imagen):
             flash("Todos los campos son obligatorios.", "danger")
             return redirect(url_for('cargar_receta'))
+
+        # Guardar la imagen si está cargada
+        image_path = '/static/default_recipe.jpg'  # Valor por defecto
+        if imagen.filename != '':
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], imagen.filename)
+            imagen.save(image_path)
 
         # Insertar la receta en la base de datos
         Receta.create(
             nombre_receta=nombre_receta,
             ingredientes=ingredientes,
             preparacion=preparacion,
-            imagen=imagen,
+            imagen=image_path,
             id_categoria=id_categoria,
             fecha_publicacion=date.today()
         )
