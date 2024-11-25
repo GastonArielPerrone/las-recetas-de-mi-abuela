@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from peewee import *
+from peewee import SqliteDatabase, Database, DateField, DateTimeField
 from datetime import datetime
 
 #Creamos la BASE DE DATOS: recetas.db
@@ -69,4 +69,4 @@ def ver_receta(receta_id):
 
 # Ejecutar la app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host= '0.0.0.0', port= 1000)
