@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from peewee import SqliteDatabase, Database, DateField, DateTimeField
+from peewee import *
 from datetime import datetime
 
 #Creamos la BASE DE DATOS: recetas.db
