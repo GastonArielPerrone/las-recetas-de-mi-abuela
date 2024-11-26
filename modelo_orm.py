@@ -112,4 +112,4 @@ def cargar_receta():
 # Inicializar la base de datos y ejecutar la app
 if __name__ == '__main__':
     inicializar_db()
-    app.run(host='0.0.0.0', port=1500)
+    app.run(host='0.0.0.0', port=1500, debug=True)
