@@ -49,8 +49,16 @@ def inicializar_db():
 def inicio():
     return render_template('index.html')  # Página principal
 
-@app.route('/consultar_recetas', methods=['GET'])
+@app.route('/Carga_de_receta.html')
+def carga_de_receta():
+    return render_template('Carga_de_receta.html')
+
+@app.route('/Consultar_recetas.html')
 def consultar_recetas():
+    return render_template('Consultar_recetas.html')
+
+@app.route('/consultar_recetas', methods=['GET'])
+def consultar_recetas_db():
     # Consultar todas las recetas con su categoría
     recetas = (Receta
                .select(Receta, Categoria)
