@@ -4,7 +4,7 @@ from datetime import date
 import os
 
 # Configuración de Flask y Base de Datos
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = 'clave_secreta'
 db = SqliteDatabase('recetas.db')
 
