@@ -72,6 +72,7 @@
       <!-- Columna Derecha (Recetas) -->
       <div class="col-md-9">
         <div id="resultado-recetas">
+        {% if recetas %}
           {% for receta in recetas %}
             <div class="card mb-4">
               <img src="{{ receta.imagen or '/static/default_recipe.jpg' }}" alt="{{ receta.nombre_receta }}" class="card-img-top">
@@ -82,14 +83,18 @@
                 <a href="{{ url_for('ver_receta', receta_id=receta.id_receta) }}" class="btn btn-primary">Ver receta</a>
               </div>
             </div>
-            {% endfor %}
+          {% endfor %}
+        {% else %}
+           <p>¡Lo siento! No tengo recetas cargadas por el momento.</p>
+        {% endif %}
         </div>
       </div>
     </div>
   </main>
+  
+  <!-- Footer -->
+  <footer class="text-center py-4">
+    <p>&copy; 2024 Gastón Ariel Perrone</p>
+  </footer>
 </body>
- <!-- Footer -->
- <footer class="text-center py-4">
-  <p>&copy; 2024 Gastón Ariel Perrone</p>
-</footer>
 </html>
