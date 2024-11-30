@@ -8,12 +8,12 @@ function inProcess(identification, id_real) {
             alert("Gracias. Continuemos.");
         } else {
             alert("Operación cancelada.");
-            window.location.href = "../templates/index.html";
+            window.location.href = "templates/index.html";
 
         }
     } else {
         alert("¡Lo siento! Su identificación no está permitida para hacer uso de este programa.");
-        window.location.href = "../templates/index.html";
+        window.location.href = "templates/index.html";
     }
 }
 
