@@ -83,7 +83,7 @@ def detalle_receta(id_receta):
     return render_template('detalle_receta.html', receta=receta)
 
 @app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
-def cargar_receta():
+def Carga_de_receta():
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
         nombre_receta = request.form.get('recipeName')  # Coincide con name="recipeName"
