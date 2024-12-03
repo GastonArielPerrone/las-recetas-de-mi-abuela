@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from peewee import *
 from datetime import date
 import os
@@ -58,7 +58,7 @@ def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
 @app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
-def Carga_de_receta():
+def Carga_de_receta(data):
     db.connect()
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
@@ -93,6 +93,15 @@ def Carga_de_receta():
     categorias = Categoria.select()
     db.close()
     return render_template('Carga_de_receta.html', categorias=categorias)
+
+@app.route('/submit/', methods=['POST'])
+def submit_form():
+    try:
+        data = request.form  # Obtener los datos del formulario
+        Carga_de_receta(data)  # Guardar en la base de datos
+        return jsonify({"message": "Receta enviada a la base de datos con éxito"}), 200
+    except Exception as e:
+        return jsonify({"error": "Error al enviar la receta", "detalles": str(e)}), 500
 
 @app.route('/Consultar_recetas.html', methods=['GET'])
 def consultar_recetas_db():
