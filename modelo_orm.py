@@ -53,10 +53,6 @@ def inicio():
 def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
-@app.route('/consultar_recetas')
-def consultar_recetas():
-    return render_template('Consultar_recetas.html')
-
 @app.route('/submit/', methods=['GET', 'POST'])
 def Carga_de_receta():
     # Ruta para cargar una nueva receta
@@ -91,6 +87,10 @@ def Carga_de_receta():
     
     categorias = Categoria.select()
     return render_template('Carga_de_receta.html', categorias=categorias)
+
+@app.route('/consultar_recetas')
+def consultar_recetas():
+    return render_template('Consultar_recetas.html')
 
 @app.route('/Consultar_recetas.html', methods=['GET'])
 def consultar_recetas_db():
