@@ -59,6 +59,7 @@ def carga_de_receta():
 
 @app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
 def Carga_de_receta():
+    db.connect()
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
         nombre_receta = request.form.get('recipeName')  # Coincide con name="recipeName"
@@ -90,20 +91,23 @@ def Carga_de_receta():
         return redirect(url_for('consultar_recetas'))
     
     categorias = Categoria.select()
+    db.close()
     return render_template('Carga_de_receta.html', categorias=categorias)
 
 @app.route('/Consultar_recetas.html', methods=['GET'])
 def consultar_recetas_db():
+    db.connect()
     # Consultar todas las recetas con su categoría
     recetas = (Receta
                .select(Receta, Categoria)
                .join(Categoria)
                .order_by(Receta.fecha_publicacion.desc()))
-    
+    db.close()
     return render_template('Consultar_recetas.html', recetas=recetas)
 
 @app.route('/receta/<int:id_receta>', methods=['GET'])
 def detalle_receta(id_receta):
+    db.connect()
     # Consultar detalles de una receta específica
     try:
         receta = (Receta
@@ -114,7 +118,7 @@ def detalle_receta(id_receta):
     except Receta.DoesNotExist:
         flash("La receta no existe.", "danger")
         return redirect(url_for('consultar_recetas'))
-
+    db.close()
     return render_template('detalle_receta.html', receta=receta)
 
 # Inicializar la base de datos y ejecutar la app
