@@ -49,11 +49,11 @@ def inicializar_db():
 def inicio():
     return render_template('index.html')  # Página principal
 
-@app.route('/Carga_de_receta.html')
+@app.route('/Carga_de_receta')
 def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
-@app.route('/Consultar_recetas.html')
+@app.route('/Consultar_recetas')
 def consultar_recetas():
     return render_template('Consultar_recetas.html')
 
