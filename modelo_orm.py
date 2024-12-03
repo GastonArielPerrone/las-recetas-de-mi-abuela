@@ -49,11 +49,15 @@ def inicializar_db():
 def inicio():
     return render_template('index.html')  # Página principal
 
+@app.route('/consultar_recetas')
+def consultar_recetas():
+    return render_template('Consultar_recetas.html')
+
 @app.route('/carga_de_receta')
 def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
-@app.route('/Carga_de_receta', methods=['GET', 'POST'])
+@app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
 def Carga_de_receta():
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
@@ -65,7 +69,7 @@ def Carga_de_receta():
         
         if not (nombre_receta and ingredientes and preparacion and id_categoria and imagen):
             flash("Todos los campos son obligatorios.", "danger")
-            return redirect(url_for('carga_de_receta'))
+            return redirect(url_for('Carga_de_receta'))
 
         # Guardar la imagen si está cargada
         image_path = '/static/default_recipe.jpg'  # Valor por defecto
@@ -87,10 +91,6 @@ def Carga_de_receta():
     
     categorias = Categoria.select()
     return render_template('Carga_de_receta.html', categorias=categorias)
-
-@app.route('/consultar_recetas')
-def consultar_recetas():
-    return render_template('Consultar_recetas.html')
 
 @app.route('/Consultar_recetas.html', methods=['GET'])
 def consultar_recetas_db():
