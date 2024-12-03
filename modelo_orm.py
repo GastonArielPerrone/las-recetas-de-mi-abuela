@@ -94,7 +94,7 @@ def Carga_de_receta():
         
         if not (nombre_receta and ingredientes and preparacion and id_categoria and imagen):
             flash("Todos los campos son obligatorios.", "danger")
-            return redirect(url_for('Carga_de_receta.html'))
+            return redirect(url_for('Carga_de_receta'))
 
         # Guardar la imagen si está cargada
         image_path = '/static/default_recipe.jpg'  # Valor por defecto
@@ -112,7 +112,7 @@ def Carga_de_receta():
             fecha_publicacion=date.today()
         )
         flash("Receta cargada exitosamente.", "success")
-        return redirect(url_for('Consultar_recetas.html'))
+        return redirect(url_for('Consultar_recetas'))
     
     categorias = Categoria.select()
     return render_template('Carga_de_receta.html', categorias=categorias)
