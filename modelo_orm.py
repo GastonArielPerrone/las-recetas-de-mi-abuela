@@ -82,7 +82,7 @@ def Carga_de_receta():
             id_categoria=id_categoria,
             fecha_publicacion=date.today()
         )
-        flash("Receta cargada exitosamente.", "success")
+        print("Receta cargada exitosamente.", "success")
         return redirect(url_for('consultar_recetas'))
     
     categorias = Categoria.select()
