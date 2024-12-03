@@ -78,7 +78,7 @@ def detalle_receta(id_receta):
                   .get())
     except Receta.DoesNotExist:
         flash("La receta no existe.", "danger")
-        return redirect(url_for('Consultar_recetas.html'))
+        return redirect(url_for('consultar_recetas'))
 
     return render_template('detalle_receta.html', receta=receta)
 
@@ -112,7 +112,7 @@ def Carga_de_receta():
             fecha_publicacion=date.today()
         )
         flash("Receta cargada exitosamente.", "success")
-        return redirect(url_for('Consultar_recetas'))
+        return redirect(url_for('consultar_recetas'))
     
     categorias = Categoria.select()
     return render_template('Carga_de_receta.html', categorias=categorias)
