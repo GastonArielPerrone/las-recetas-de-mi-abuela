@@ -49,11 +49,11 @@ def inicializar_db():
 def inicio():
     return render_template('index.html')  # Página principal
 
-@app.route('/Carga_de_receta.html')
+@app.route('/Carga_de_receta')
 def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
-@app.route('/Consultar_recetas.html')
+@app.route('/Consultar_recetas')
 def consultar_recetas():
     return render_template('Consultar_recetas.html')
 
@@ -78,7 +78,7 @@ def detalle_receta(id_receta):
                   .get())
     except Receta.DoesNotExist:
         flash("La receta no existe.", "danger")
-        return redirect(url_for('consultar_recetas'))
+        return redirect(url_for('Consultar_recetas.html'))
 
     return render_template('detalle_receta.html', receta=receta)
 
