@@ -49,15 +49,15 @@ def inicializar_db():
 def inicio():
     return render_template('index.html')  # Página principal
 
-@app.route('/cargar_receta')
+@app.route('/Cargar_de_receta.html')
 def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
-@app.route('/consultar_recetas')
+@app.route('/Consultar_recetas.html')
 def consultar_recetas():
     return render_template('Consultar_recetas.html')
 
-@app.route('/consultar_recetas', methods=['GET'])
+@app.route('/Consultar_recetas.html', methods=['GET'])
 def consultar_recetas_db():
     # Consultar todas las recetas con su categoría
     recetas = (Receta
@@ -82,7 +82,7 @@ def detalle_receta(id_receta):
 
     return render_template('detalle_receta.html', receta=receta)
 
-@app.route('/cargar_receta', methods=['GET', 'POST'])
+@app.route('/Cargar_de_receta.html', methods=['GET', 'POST'])
 def cargar_receta():
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
