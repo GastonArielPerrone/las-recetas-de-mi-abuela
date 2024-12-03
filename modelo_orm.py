@@ -57,7 +57,7 @@ def carga_de_receta():
 def consultar_recetas():
     return render_template('Consultar_recetas.html')
 
-@app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
+@app.route('/submit/', methods=['GET', 'POST'])
 def Carga_de_receta():
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
