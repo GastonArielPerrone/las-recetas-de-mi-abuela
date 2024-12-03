@@ -58,15 +58,15 @@ def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
 @app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
-def Carga_de_receta():
+def Carga_de_receta(data):
     db.connect()
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
-        nombre_receta = request.form.get('recipeName')  # Coincide con name="recipeName"
-        ingredientes = request.form.get('ingredients')  # Coincide con name="ingredients"
-        preparacion = request.form.get('preparation')  # Coincide con name="preparation"
-        id_categoria = request.form.get('category')  # Coincide con name="category"
-        imagen = request.files['image']  # Coincide con name="image"
+        nombre_receta = data['recipeName']  # Coincide con name="recipeName"
+        ingredientes = data['ingredients']  # Coincide con name="ingredients"
+        preparacion = data['preparation']  # Coincide con name="preparation"
+        id_categoria = data['category']  # Coincide con name="category"
+        imagen = data['image']  # Coincide con name="image"
         
         if not (nombre_receta and ingredientes and preparacion and id_categoria and imagen):
             flash("Todos los campos son obligatorios.", "danger")
@@ -97,7 +97,8 @@ def Carga_de_receta():
 @app.route('/submit/', methods=['POST'])
 def submit_form():
     try:
-        Carga_de_receta()  # Guardar en la base de datos
+        data = request.form()
+        Carga_de_receta(data)  # Guardar en la base de datos
         return jsonify({"message": "Receta enviada a la base de datos con éxito"}), 200
     except Exception as e:
         return jsonify({"error": "Error al enviar la receta", "detalles": str(e)}), 500
