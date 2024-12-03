@@ -58,7 +58,7 @@ def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
 @app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
-def Carga_de_receta(data):
+def Carga_de_receta():
     db.connect()
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
@@ -97,8 +97,7 @@ def Carga_de_receta(data):
 @app.route('/submit/', methods=['POST'])
 def submit_form():
     try:
-        data = request.form  # Obtener los datos del formulario
-        Carga_de_receta(data)  # Guardar en la base de datos
+        Carga_de_receta()  # Guardar en la base de datos
         return jsonify({"message": "Receta enviada a la base de datos con éxito"}), 200
     except Exception as e:
         return jsonify({"error": "Error al enviar la receta", "detalles": str(e)}), 500
