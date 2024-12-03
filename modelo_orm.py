@@ -57,31 +57,6 @@ def carga_de_receta():
 def consultar_recetas():
     return render_template('Consultar_recetas.html')
 
-@app.route('/Consultar_recetas.html', methods=['GET'])
-def consultar_recetas_db():
-    # Consultar todas las recetas con su categoría
-    recetas = (Receta
-               .select(Receta, Categoria)
-               .join(Categoria)
-               .order_by(Receta.fecha_publicacion.desc()))
-    
-    return render_template('Consultar_recetas.html', recetas=recetas)
-
-@app.route('/receta/<int:id_receta>', methods=['GET'])
-def detalle_receta(id_receta):
-    # Consultar detalles de una receta específica
-    try:
-        receta = (Receta
-                  .select(Receta, Categoria)
-                  .join(Categoria)
-                  .where(Receta.id_receta == id_receta)
-                  .get())
-    except Receta.DoesNotExist:
-        flash("La receta no existe.", "danger")
-        return redirect(url_for('consultar_recetas'))
-
-    return render_template('detalle_receta.html', receta=receta)
-
 @app.route('/Carga_de_receta', methods=['GET', 'POST'])
 def Carga_de_receta():
     # Ruta para cargar una nueva receta
@@ -116,6 +91,31 @@ def Carga_de_receta():
     
     categorias = Categoria.select()
     return render_template('Carga_de_receta.html', categorias=categorias)
+
+@app.route('/Consultar_recetas.html', methods=['GET'])
+def consultar_recetas_db():
+    # Consultar todas las recetas con su categoría
+    recetas = (Receta
+               .select(Receta, Categoria)
+               .join(Categoria)
+               .order_by(Receta.fecha_publicacion.desc()))
+    
+    return render_template('Consultar_recetas.html', recetas=recetas)
+
+@app.route('/receta/<int:id_receta>', methods=['GET'])
+def detalle_receta(id_receta):
+    # Consultar detalles de una receta específica
+    try:
+        receta = (Receta
+                  .select(Receta, Categoria)
+                  .join(Categoria)
+                  .where(Receta.id_receta == id_receta)
+                  .get())
+    except Receta.DoesNotExist:
+        flash("La receta no existe.", "danger")
+        return redirect(url_for('consultar_recetas'))
+
+    return render_template('detalle_receta.html', receta=receta)
 
 # Inicializar la base de datos y ejecutar la app
 if __name__ == '__main__':
