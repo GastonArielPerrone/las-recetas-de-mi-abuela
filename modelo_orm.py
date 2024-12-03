@@ -70,7 +70,7 @@ def Carga_de_receta():
         
         if not (nombre_receta and ingredientes and preparacion and id_categoria and imagen):
             flash("Todos los campos son obligatorios.", "danger")
-            return redirect(url_for('Carga_de_receta'))
+            return redirect(url_for('carga_de_receta'))
 
         # Guardar la imagen si está cargada
         image_path = '/static/default_recipe.jpg'  # Valor por defecto
