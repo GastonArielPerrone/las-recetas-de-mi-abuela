@@ -49,7 +49,7 @@ def inicializar_db():
 def inicio():
     return render_template('index.html')  # Página principal
 
-@app.route('/Cargar_de_receta.html')
+@app.route('/Carga_de_receta.html')
 def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
@@ -82,7 +82,7 @@ def detalle_receta(id_receta):
 
     return render_template('detalle_receta.html', receta=receta)
 
-@app.route('/Cargar_de_receta.html', methods=['GET', 'POST'])
+@app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
 def cargar_receta():
     # Ruta para cargar una nueva receta
     if request.method == 'POST':
