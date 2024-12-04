@@ -27,7 +27,7 @@ class Receta(BaseModel):
     nombre_receta = CharField()
     ingredientes = TextField()
     preparacion = TextField()
-    imagen = CharField(default='/static/default_recipe.jpg')
+    imagen = CharField(default='uploads/default_recipe.jpg')
     fecha_publicacion = DateField(default=date.today)
     id_categoria = ForeignKeyField(Categoria, backref='recetas')
 
@@ -55,28 +55,35 @@ def consultar_recetas():
 
 @app.route('/carga_de_receta')
 def carga_de_receta():
-    return render_template('Carga_de_receta.html')
+    categorias = Categoria.select()
+    return render_template('Carga_de_receta.html', categorias=categorias)
 
-@app.route('/Carga_de_receta.html', methods=['GET','POST'])
+@app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
 def Carga_de_receta():
     db.connect()
-    # Ruta para cargar una nueva receta
     if request.method == 'POST':
-        nombre_receta = request.form.get('recipeName')  # Coincide con name="recipeName"
-        ingredientes = request.form.get('ingredients')  # Coincide con name="ingredients"
-        preparacion = request.form.get('preparation')  # Coincide con name="preparation"
-        id_categoria = request.form.get('category')  # Coincide con name="category"
-        imagen = request.files['image']  # Coincide con name="image"
-        
-        if not (nombre_receta and ingredientes and preparacion and id_categoria and imagen):
+        nombre_receta = request.form.get('recipeName')
+        ingredientes = request.form.get('ingredients')
+        preparacion = request.form.get('preparation')
+        nombre_categoria = request.form.get('category')
+        imagen = request.files['image']
+
+        if not (nombre_receta and ingredientes and preparacion and nombre_categoria and imagen):
             flash("Todos los campos son obligatorios.", "danger")
             return redirect(url_for('carga_de_receta'))
 
-        # Guardar la imagen si está cargada
-        image_path = '/static/default_recipe.jpg'  # Valor por defecto
+        # Obtener la categoría por su nombre
+        try:
+            categoria = Categoria.get(Categoria.nombre_categoria == nombre_categoria)
+        except Categoria.DoesNotExist:
+            flash("La categoría seleccionada no existe.", "danger")
+            return redirect(url_for('carga_de_receta'))
+
+        # Guardar la imagen
+        image_path = 'uploads/default_recipe.jpg'  # Valor por defecto
         if imagen.filename != '':
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], imagen.filename)
-            imagen.save(image_path)
+            image_path = f'uploads/{imagen.filename}'
+            imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], imagen.filename))
 
         # Insertar la receta en la base de datos
         Receta.create(
@@ -84,12 +91,12 @@ def Carga_de_receta():
             ingredientes=ingredientes,
             preparacion=preparacion,
             imagen=image_path,
-            id_categoria=id_categoria,
+            id_categoria=categoria.id_categoria,
             fecha_publicacion=date.today()
         )
-        print("Receta cargada exitosamente.", "success")
+        flash("Receta cargada exitosamente.", "success")
         return redirect(url_for('consultar_recetas'))
-    
+
     categorias = Categoria.select()
     db.close()
     return render_template('Carga_de_receta.html', categorias=categorias)
