@@ -55,8 +55,7 @@ def consultar_recetas():
 
 @app.route('/carga_de_receta')
 def carga_de_receta():
-    categorias = Categoria.select()
-    return render_template('Carga_de_receta.html', categorias=categorias)
+    return render_template('Carga_de_receta.html')
 
 @app.route('/carga_de_receta', methods=['GET', 'POST'])
 def Carga_de_receta():
