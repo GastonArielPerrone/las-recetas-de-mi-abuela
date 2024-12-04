@@ -67,6 +67,9 @@ def Carga_de_receta():
         nombre_categoria = request.form.get('category')
         imagen = request.files['image']
 
+        # Log de depuración
+        print(f"Receta: {nombre_receta}, Ingredientes: {ingredientes}, Preparación: {preparacion}, Categoría: {nombre_categoria}")
+
         if not (nombre_receta and ingredientes and preparacion and nombre_categoria and imagen):
             flash("Todos los campos son obligatorios.", "danger")
             return redirect(url_for('carga_de_receta'))
