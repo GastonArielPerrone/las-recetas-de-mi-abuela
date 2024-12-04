@@ -44,9 +44,8 @@ def inicializar_bd():
 
 # Ruta principal para mostrar el formulario
 @app.route('/')
-def index():
-    categorias = Categoria.select()  # Obtener todas las categorías para el formulario
-    return render_template('Carga_de_receta.html', categorias=categorias)
+def inicio():
+    return render_template('Carga_de_receta.html')
 
 # Ruta para manejar la carga de recetas
 @app.route('/carga_de_receta', methods=['POST'])
