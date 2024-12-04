@@ -77,8 +77,12 @@ def carga_receta():
         return redirect(url_for('index'))
     except Exception as e:
         return f"Error al cargar la receta: {str(e)}"
+    
+app.route('/consultar_recetas')
+def consultar_recetas():
+    return render_template('Consultar_recetas.html')
 
 # Inicializar la base de datos al iniciar la app
 if __name__ == '__main__':
     inicializar_bd()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=3000,debug=True)
