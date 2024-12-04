@@ -33,6 +33,11 @@ app = Flask(__name__)
 def inicio():
     return render_template('index.html')
 
+# Ruta principal para mostrar el formulario
+app.route('/carga_de_receta')
+def carga_de_receta():
+    return render_template('Carga_de_receta.html')
+
 # Inicialización de la base de datos y categorías
 def inicializar_bd():
     db.connect()
@@ -46,12 +51,6 @@ def inicializar_bd():
     for nombre in categorias:
         Categoria.get_or_create(nombre_categoria=nombre)
     db.close()
-
-# Ruta principal para mostrar el formulario
-
-app.route('/carga_de_receta')
-def carga_de_receta():
-    return render_template('Carga_de_receta.html')
 
 # Ruta para manejar la carga de recetas
 @app.route('/carga_de_receta', methods=['POST'])
