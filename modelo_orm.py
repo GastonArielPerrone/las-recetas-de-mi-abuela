@@ -42,7 +42,7 @@ def consultar_recetas():
 
 # Ruta principal para mostrar el formulario
 app.route('/carga_receta')
-def carga_de_receta():
+def carga_receta():
     return render_template('Carga_de_receta.html', categorias=[])
 
 # Inicialización de la base de datos y categorías
@@ -61,7 +61,7 @@ def inicializar_bd():
 
 # Ruta para manejar la carga de recetas
 @app.route('/Carga_de_receta.html', methods=['GET','POST'])
-def carga_receta():
+def carga_receta1():
     try:
         # Obtener datos del formulario
         nombre_receta = request.form['recipeName']
