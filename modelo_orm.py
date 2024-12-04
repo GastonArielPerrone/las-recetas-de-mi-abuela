@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from peewee import Model, SqliteDatabase, CharField, AutoField, ForeignKeyField, DateField
 from datetime import date
+import os
 
 # Configuración de la base de datos
 db = SqliteDatabase('recetas.db')
@@ -28,20 +29,67 @@ class Receta(BaseModel):
 # Crear la aplicación Flask
 app = Flask(__name__, static_folder='static')
 
-# Configuración para limitar el tamaño máximo de los archivos cargados (16 MB en este caso)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limitar a 16 MB
+# Asegurar que la carpeta de imágenes existe
+UPLOAD_FOLDER = 'static/uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# Configuración de Flask
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Carga de página de inicio
 @app.route('/')
 def inicio():
     return render_template('index.html')
 
-# Carga de página de Consultas.
+# Carga de página de Consultas
 @app.route('/consultar_recetas', methods=['GET'])
 def consultar_recetas():
-    # Lógica para obtener recetas desde la base de datos
-    recetas = Receta.select()
+    # Obtener todas las recetas desde la base de datos
+    recetas = Receta.select().dicts()
     return render_template('Consultar_recetas.html', recetas=recetas)
+
+# Ruta para manejar la carga de recetas
+@app.route('/cargar_receta', methods=['GET', 'POST'])
+def cargar_receta():
+    try:
+        if request.method == 'POST':
+            # Obtener datos del formulario
+            nombre_receta = request.form.get('recipeName')
+            ingredientes = request.form.get('ingredients')
+            preparacion = request.form.get('preparation')
+            id_categoria = request.form.get('category')
+
+            # Validar campos obligatorios
+            if not (nombre_receta and ingredientes and preparacion and id_categoria):
+                return "Todos los campos son obligatorios.", 400
+
+            # Manejar la subida de la imagen
+            imagen = request.files.get('image')
+            if imagen:
+                if imagen.filename == '':
+                    return "No se seleccionó una imagen", 400
+                if not imagen.filename.lower().endswith(('png', 'jpg', 'jpeg', 'gif')):
+                    return "El archivo debe ser una imagen válida", 400
+                ruta_imagen = os.path.join(app.config['UPLOAD_FOLDER'], imagen.filename)
+                imagen.save(ruta_imagen)
+            else:
+                return "Se requiere una imagen", 400
+
+            # Guardar receta en la base de datos
+            Receta.create(
+                nombre_receta=nombre_receta,
+                ingredientes=ingredientes,
+                preparacion=preparacion,
+                imagen_receta=ruta_imagen,
+                id_categoria=id_categoria
+            )
+            return redirect(url_for('inicio'))
+
+        # Si el método es GET, renderizar la página
+        categorias = Categoria.select()
+        return render_template('Carga_de_receta.html', categorias=categorias)
+    except Exception as e:
+        return f"Error al cargar la receta: {str(e)}", 500
 
 # Inicialización de la base de datos y categorías
 def inicializar_bd():
@@ -56,42 +104,6 @@ def inicializar_bd():
     for nombre in categorias:
         Categoria.get_or_create(nombre_categoria=nombre)
     db.close()
-
-# Ruta para manejar la carga de recetas
-@app.route('/cargar_receta', methods=['GET', 'POST'])
-def cargar_receta():
-    try:
-        if request.method == 'POST':
-            # Obtener datos del formulario
-            nombre_receta = request.form['recipeName']
-            ingredientes = request.form['ingredients']
-            preparacion = request.form['preparation']
-            id_categoria = request.form['category']
-            
-            # Manejar la subida de la imagen
-            imagen = request.files.get('image')
-            if imagen:
-                if imagen.filename == '':
-                    return "No se seleccionó una imagen", 400
-                # Validar que el archivo sea una imagen (opcional)
-                if not imagen.filename.lower().endswith(('png', 'jpg', 'jpeg', 'gif')):
-                    return "El archivo debe ser una imagen", 400
-                ruta_imagen = f'static/uploads/{imagen.filename}'
-                imagen.save(ruta_imagen)
-            else:
-                ruta_imagen = ''
-
-            # Guardar receta en la base de datos
-            Receta.create(
-                nombre_receta=nombre_receta,
-                ingredientes=ingredientes,
-                preparacion=preparacion,
-                imagen_receta=ruta_imagen,
-                id_categoria=id_categoria
-            )
-            return redirect(url_for('cargar_receta'))
-    except Exception as e:
-        return f"Error al cargar la receta: {str(e)}", 500
 
 # Inicializar la base de datos al iniciar la app
 if __name__ == '__main__':
