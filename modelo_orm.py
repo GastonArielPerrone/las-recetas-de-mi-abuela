@@ -26,7 +26,7 @@ class Receta(BaseModel):
     id_categoria = ForeignKeyField(Categoria, backref='recetas')
 
 # Crear la aplicación Flask
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # Carga de página de inicio
 @app.route('/')
@@ -34,14 +34,15 @@ def inicio():
     return render_template('index.html')
 
 # Carga de página de Consultas.
-app.route('/Consultar_recetas')
+app.route('/consultar_recetas')
 def consultar_recetas():
     return render_template('Consultar_recetas.html')
 
 # Ruta principal para mostrar el formulario
-app.route('/Carga_de_receta')
+app.route('/carga_receta')
 def carga_de_receta():
-    return render_template('Carga_de_receta.html')
+    print("Endpoint /carga_receta accedido")
+    return render_template('Carga_de_receta.html', categorias=[])
 
 # Inicialización de la base de datos y categorías
 def inicializar_bd():
@@ -83,7 +84,7 @@ def carga_receta():
             imagen_receta=ruta_imagen,
             id_categoria=id_categoria
         )
-        return redirect(url_for('carga_de_receta'))
+        return redirect(url_for('cargar_receta'))
     except Exception as e:
         return f"Error al cargar la receta: {str(e)}"
 
