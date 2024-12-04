@@ -27,46 +27,38 @@
         <p>Al finalizar cada campo, haz clic en "Cargar receta" para guardar los detalles.</p>
 
         <!-- Formulario de agregar receta -->
-        <form class="text-left mt-4" action="carga_de_receta" method="POST" enctype="multipart/form-data">
+        <form class="text-left mt-4" action="{{ url_for('carga_receta') }}" method="POST" enctype="multipart/form-data">
             
             <!-- Campo Categoría -->
             <div class="form-group">
                 <label for="category">Categoría</label>
                 <select class="form-control" id="category" name="category" required>
                     <option value="" disabled selected>Selecciona una categoría</option>
-                    <option value="Entradas">Entradas</option>
-                    <option value="Platos principales">Platos principales</option>
-                    <option value="Postres">Postres</option>
-                    <option value="Bebidas">Bebidas</option>
-                    <option value="Sopas">Sopas</option>
-                    <option value="Panadería">Panadería</option>
-                    <option value="Pastelería">Pastelería</option>
-                    <option value="Galletas">Galletas</option>
-                    <option value="Salsas">Salsas</option>
-                    <option value="Ensaladas">Ensaladas</option>
-                    <option value="Guarniciones">Guarniciones</option>
-                    <option value="Vegetarianas">Vegetarianas</option>
-                    <option value="Sin gluten">Sin gluten</option>
-                    <option value="Apto para diabéticos">Apto para diabéticos</option>
-                    <!-- Aquí puedes agregar más categorías según sea necesario -->
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id_categoria }}">{{ categoria.nombre_categoria }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
+            <!-- Campo Nombre de la receta -->
             <div class="form-group">
                 <label for="recipeName">Nombre de la receta</label>
                 <input type="text" class="form-control" id="recipeName" name="recipeName" placeholder="Ejemplo: Pastel de manzana" required>
             </div>
 
+            <!-- Campo Ingredientes -->
             <div class="form-group">
                 <label for="ingredients">Ingredientes</label>
                 <textarea class="form-control" id="ingredients" name="ingredients" rows="4" placeholder="Lista de ingredientes" required></textarea>
             </div>
 
+            <!-- Campo Elaboración -->
             <div class="form-group">
                 <label for="preparation">Elaboración</label>
                 <textarea class="form-control" id="preparation" name="preparation" rows="6" placeholder="Describe el proceso de preparación" required></textarea>
             </div>
 
+            <!-- Campo Imagen -->
             <div class="form-group">
                 <label for="image">Imagen</label>
                 <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>

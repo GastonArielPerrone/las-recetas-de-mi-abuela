@@ -1,136 +1,84 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
-from peewee import *
+from flask import Flask, render_template, request, redirect, url_for
+from peewee import Model, SqliteDatabase, CharField, AutoField, ForeignKeyField, DateField
 from datetime import date
-import os
 
-# Configuración de Flask y Base de Datos
-app = Flask(__name__, static_folder='static')
-app.secret_key = 'clave_secreta'
+# Configuración de la base de datos
 db = SqliteDatabase('recetas.db')
 
-# Carpeta para subir imágenes
-UPLOAD_FOLDER = 'static/uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Modelos de la base de datos
+# Definición del modelo base
 class BaseModel(Model):
     class Meta:
         database = db
 
+# Modelo para la tabla Categorias
 class Categoria(BaseModel):
-    id_categoria = AutoField()
+    id_categoria = AutoField(primary_key=True)
     nombre_categoria = CharField(unique=True)
 
+# Modelo para la tabla Recetas
 class Receta(BaseModel):
-    id_receta = AutoField()
+    id_receta = AutoField(primary_key=True)
     nombre_receta = CharField()
-    ingredientes = TextField()
-    preparacion = TextField()
-    imagen = CharField(default='uploads/default_recipe.jpg')
-    fecha_publicacion = DateField(default=date.today)
+    imagen_receta = CharField()  # Ruta de la imagen
+    ingredientes = CharField()
+    preparacion = CharField()
+    fecha_subida = DateField(default=date.today)  # Fecha automática
     id_categoria = ForeignKeyField(Categoria, backref='recetas')
 
-# Inicializar la base de datos
-def inicializar_db():
+# Crear la aplicación Flask
+app = Flask(__name__)
+
+# Inicialización de la base de datos y categorías
+def inicializar_bd():
     db.connect()
-    db.create_tables([Categoria, Receta], safe=True)
-    categorias_default = [
-        "Entradas", "Platos principales", "Postres", "Bebidas",
-        "Sopas", "Panadería", "Pastelería", "Galletas", "Salsas", "Ensaladas",
+    db.create_tables([Categoria, Receta])
+    # Insertar categorías únicas si no existen
+    categorias = [
+        "Entradas", "Platos principales", "Postres", "Bebidas", "Sopas",
+        "Panadería", "Pastelería", "Galletas", "Salsas", "Ensaladas",
         "Guarniciones", "Vegetarianas", "Sin gluten", "Apto para diabéticos"
     ]
-    for cat in categorias_default:
-        Categoria.get_or_create(nombre_categoria=cat)
+    for nombre in categorias:
+        Categoria.get_or_create(nombre_categoria=nombre)
     db.close()
 
-# Rutas
+# Ruta principal para mostrar el formulario
 @app.route('/')
-def inicio():
-    return render_template('index.html')  # Página principal
+def index():
+    categorias = Categoria.select()  # Obtener todas las categorías para el formulario
+    return render_template('Carga_de_receta.html', categorias=categorias)
 
-@app.route('/consultar_recetas')
-def consultar_recetas():
-    return render_template('Consultar_recetas.html')
-
-@app.route('/carga_de_receta')
-def carga_de_receta():
-    return render_template('Carga_de_receta.html')
-
-@app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
-def Carga_de_receta():
-    db.connect()
-    if request.method == 'POST':
-        nombre_receta = request.form.get('recipeName')
-        ingredientes = request.form.get('ingredients')
-        preparacion = request.form.get('preparation')
-        nombre_categoria = request.form.get('category')
+# Ruta para manejar la carga de recetas
+@app.route('/carga_de_receta', methods=['POST'])
+def carga_receta():
+    try:
+        # Obtener datos del formulario
+        nombre_receta = request.form['recipeName']
+        ingredientes = request.form['ingredients']
+        preparacion = request.form['preparation']
+        id_categoria = request.form['category']
+        
+        # Manejar la subida de la imagen
         imagen = request.files['image']
+        if imagen:
+            ruta_imagen = f'static/uploads/{imagen.filename}'
+            imagen.save(ruta_imagen)
+        else:
+            ruta_imagen = ''
 
-        # Log de depuración
-        print(f"Receta: {nombre_receta}, Ingredientes: {ingredientes}, Preparación: {preparacion}, Categoría: {nombre_categoria}")
-
-        if not (nombre_receta and ingredientes and preparacion and nombre_categoria and imagen):
-            flash("Todos los campos son obligatorios.", "danger")
-            return redirect(url_for('carga_de_receta'))
-
-        # Obtener la categoría por su nombre
-        try:
-            categoria = Categoria.get(Categoria.nombre_categoria == nombre_categoria)
-        except Categoria.DoesNotExist:
-            flash("La categoría seleccionada no existe.", "danger")
-            return redirect(url_for('carga_de_receta'))
-
-        # Guardar la imagen
-        image_path = 'uploads/default_recipe.jpg'  # Valor por defecto
-        if imagen.filename != '':
-            image_path = f'uploads/{imagen.filename}'
-            imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], imagen.filename))
-
-        # Insertar la receta en la base de datos
+        # Guardar receta en la base de datos
         Receta.create(
             nombre_receta=nombre_receta,
             ingredientes=ingredientes,
             preparacion=preparacion,
-            imagen=image_path,
-            id_categoria=categoria.id_categoria,
-            fecha_publicacion=date.today()
+            imagen_receta=ruta_imagen,
+            id_categoria=id_categoria
         )
-        flash("Receta cargada exitosamente.", "success")
-        return redirect(url_for('consultar_recetas'))
+        return redirect(url_for('index'))
+    except Exception as e:
+        return f"Error al cargar la receta: {str(e)}"
 
-    categorias = Categoria.select()
-    db.close()
-    return render_template('Carga_de_receta.html', categorias=categorias)
-
-@app.route('/Consultar_recetas.html', methods=['GET'])
-def consultar_recetas_db():
-    db.connect()
-    # Consultar todas las recetas con su categoría
-    recetas = (Receta
-               .select(Receta, Categoria)
-               .join(Categoria)
-               .order_by(Receta.fecha_publicacion.desc()))
-    db.close()
-    return render_template('Consultar_recetas.html', recetas=recetas)
-
-@app.route('/receta/<int:id_receta>', methods=['GET'])
-def detalle_receta(id_receta):
-    db.connect()
-    # Consultar detalles de una receta específica
-    try:
-        receta = (Receta
-                  .select(Receta, Categoria)
-                  .join(Categoria)
-                  .where(Receta.id_receta == id_receta)
-                  .get())
-    except Receta.DoesNotExist:
-        flash("La receta no existe.", "danger")
-        return redirect(url_for('consultar_recetas'))
-    db.close()
-    return render_template('detalle_receta.html', receta=receta)
-
-# Inicializar la base de datos y ejecutar la app
+# Inicializar la base de datos al iniciar la app
 if __name__ == '__main__':
-    inicializar_db()
-    app.run(host='0.0.0.0', port=1500, debug=True)
+    inicializar_bd()
+    app.run(debug=True)
