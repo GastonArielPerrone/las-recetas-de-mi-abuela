@@ -53,7 +53,7 @@ def inicializar_bd():
     db.close()
 
 # Ruta para manejar la carga de recetas
-@app.route('/carga_de_receta', methods=['POST'])
+@app.route('/Carga_de_receta.html', methods=['POST'])
 def carga_receta():
     try:
         # Obtener datos del formulario
@@ -78,7 +78,7 @@ def carga_receta():
             imagen_receta=ruta_imagen,
             id_categoria=id_categoria
         )
-        return redirect(url_for('index'))
+        return redirect(url_for('carga_de_receta'))
     except Exception as e:
         return f"Error al cargar la receta: {str(e)}"
     
