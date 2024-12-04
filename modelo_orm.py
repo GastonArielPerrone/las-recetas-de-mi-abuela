@@ -34,12 +34,12 @@ def inicio():
     return render_template('index.html')
 
 # Carga de página de Consultas.
-app.route('/consultar_recetas')
+app.route('/Consultar_recetas')
 def consultar_recetas():
     return render_template('Consultar_recetas.html')
 
 # Ruta principal para mostrar el formulario
-app.route('/carga_de_receta')
+app.route('/Carga_de_receta')
 def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
