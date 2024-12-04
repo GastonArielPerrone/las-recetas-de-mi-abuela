@@ -45,6 +45,10 @@ def inicializar_bd():
 # Ruta principal para mostrar el formulario
 @app.route('/')
 def inicio():
+    return render_template('idex.html')
+
+app.route('/carga_de_receta')
+def carga_de_receta():
     return render_template('Carga_de_receta.html')
 
 # Ruta para manejar la carga de recetas
