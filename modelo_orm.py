@@ -36,19 +36,39 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # Configuración de Flask
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Carga de página de inicio
+# Página de inicio
 @app.route('/')
 def inicio():
     return render_template('index.html')
 
-# Carga de página de Consultas
+# Página de consulta de recetas
 @app.route('/consultar_recetas', methods=['GET'])
 def consultar_recetas():
-    # Obtener todas las recetas desde la base de datos
-    recetas = Receta.select().dicts()
-    return render_template('Consultar_recetas.html', recetas=recetas)
+    # Recuperar los parámetros de búsqueda
+    ingrediente = request.args.get('ingrediente')
+    nombre_receta = request.args.get('nombre_receta')
+    categoria = request.args.get('category')
 
-# Ruta para manejar la carga de recetas
+    # Construir la consulta según los parámetros
+    query = Receta.select()
+
+    if ingrediente:
+        query = query.where(Receta.ingredientes.contains(ingrediente))
+    elif nombre_receta:
+        query = query.where(Receta.nombre_receta.contains(nombre_receta))
+    elif categoria:
+        query = query.join(Categoria).where(Categoria.nombre_categoria == categoria)
+
+    # Ejecutar la consulta y convertir a lista
+    recetas = list(query)
+
+    # Renderizar la plantilla con los resultados
+    return render_template(
+        'Consultar_recetas.html',
+        recetas=recetas
+    )
+
+# Cargar una nueva receta
 @app.route('/cargar_receta', methods=['GET', 'POST'])
 def cargar_receta():
     try:
