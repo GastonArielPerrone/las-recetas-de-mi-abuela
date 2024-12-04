@@ -34,14 +34,15 @@ def inicio():
     return render_template('index.html')
 
 # Carga de página de Consultas.
-app.route('/consultar_recetas')
+@app.route('/consultar_recetas', methods=['GET'])
 def consultar_recetas():
-    return render_template('Consultar_recetas.html')
+    # Lógica para obtener recetas desde la base de datos
+    recetas = []  # Ejemplo: [{"id": 1, "nombre": "Tarta de manzana"}]
+    return render_template('Consultar_recetas.html', recetas=recetas)
 
 # Ruta principal para mostrar el formulario
 app.route('/carga_receta')
 def carga_de_receta():
-    print("Endpoint /carga_receta accedido")
     return render_template('Carga_de_receta.html', categorias=[])
 
 # Inicialización de la base de datos y categorías
