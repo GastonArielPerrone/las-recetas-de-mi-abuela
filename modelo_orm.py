@@ -31,7 +31,7 @@ app = Flask(__name__)
 # Carga de página de inicio
 @app.route('/')
 def inicio():
-    return render_template('idex.html')
+    return render_template('index.html')
 
 # Inicialización de la base de datos y categorías
 def inicializar_bd():
