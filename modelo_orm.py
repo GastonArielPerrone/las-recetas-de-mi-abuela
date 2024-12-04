@@ -28,6 +28,11 @@ class Receta(BaseModel):
 # Crear la aplicación Flask
 app = Flask(__name__)
 
+# Carga de página de inicio
+@app.route('/')
+def inicio():
+    return render_template('idex.html')
+
 # Inicialización de la base de datos y categorías
 def inicializar_bd():
     db.connect()
@@ -43,9 +48,6 @@ def inicializar_bd():
     db.close()
 
 # Ruta principal para mostrar el formulario
-@app.route('/')
-def inicio():
-    return render_template('idex.html')
 
 app.route('/carga_de_receta')
 def carga_de_receta():
