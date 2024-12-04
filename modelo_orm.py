@@ -62,6 +62,9 @@ def consultar_recetas():
     # Ejecutar la consulta y convertir a lista
     recetas = list(query)
 
+    # Supongamos que Receta tiene una relación con Categorias a través de 'id_categoria'
+    recetas = Receta.select().join(Categoria).execute()
+
     # Renderizar la plantilla con los resultados
     return render_template(
         'Consultar_recetas.html',
