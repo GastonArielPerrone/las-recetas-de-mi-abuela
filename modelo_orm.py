@@ -56,7 +56,7 @@ def inicializar_bd():
 
 # Ruta para manejar la carga de recetas
 @app.route('/cargar_receta', methods=['GET','POST'])
-def carga_receta():
+def cargar_receta():
     try:
         # Obtener datos del formulario
         nombre_receta = request.form['recipeName']
