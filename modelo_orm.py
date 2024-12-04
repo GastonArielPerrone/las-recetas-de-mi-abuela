@@ -40,11 +40,6 @@ def consultar_recetas():
     recetas = []  # Ejemplo: [{"id": 1, "nombre": "Tarta de manzana"}]
     return render_template('Consultar_recetas.html', recetas=recetas)
 
-# Ruta principal para mostrar el formulario
-app.route('/carga_receta')
-def carga_receta():
-    return render_template('Carga_de_receta.html', categorias=[])
-
 # Inicialización de la base de datos y categorías
 def inicializar_bd():
     db.connect()
@@ -60,8 +55,8 @@ def inicializar_bd():
     db.close()
 
 # Ruta para manejar la carga de recetas
-@app.route('/Carga_de_receta.html', methods=['GET','POST'])
-def carga_receta1():
+@app.route('/carga_receta', methods=['GET','POST'])
+def carga_receta():
     try:
         # Obtener datos del formulario
         nombre_receta = request.form['recipeName']
