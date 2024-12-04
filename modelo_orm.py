@@ -33,6 +33,11 @@ app = Flask(__name__)
 def inicio():
     return render_template('index.html')
 
+# Carga de página de Consultas.
+app.route('/consultar_recetas')
+def consultar_recetas():
+    return render_template('Consultar_recetas.html')
+
 # Ruta principal para mostrar el formulario
 app.route('/carga_de_receta')
 def carga_de_receta():
@@ -81,10 +86,6 @@ def carga_receta():
         return redirect(url_for('carga_de_receta'))
     except Exception as e:
         return f"Error al cargar la receta: {str(e)}"
-    
-app.route('/consultar_recetas')
-def consultar_recetas():
-    return render_template('Consultar_recetas.html')
 
 # Inicializar la base de datos al iniciar la app
 if __name__ == '__main__':
