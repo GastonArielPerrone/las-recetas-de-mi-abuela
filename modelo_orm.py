@@ -58,7 +58,7 @@ def carga_de_receta():
     categorias = Categoria.select()
     return render_template('Carga_de_receta.html', categorias=categorias)
 
-@app.route('/Carga_de_receta.html', methods=['GET', 'POST'])
+@app.route('/carga_de_receta', methods=['GET', 'POST'])
 def Carga_de_receta():
     db.connect()
     if request.method == 'POST':
