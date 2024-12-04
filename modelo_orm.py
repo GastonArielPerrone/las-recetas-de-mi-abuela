@@ -59,7 +59,7 @@ def inicializar_bd():
     db.close()
 
 # Ruta para manejar la carga de recetas
-@app.route('/cargar_receta', methods=['GET','POST'])
+@app.route('/carga_receta', methods=['GET','POST'])
 def carga_receta():
     try:
         # Obtener datos del formulario
