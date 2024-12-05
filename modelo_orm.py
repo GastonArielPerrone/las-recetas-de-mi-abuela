@@ -24,7 +24,7 @@ class Receta(BaseModel):
     ingredientes = CharField()
     preparacion = CharField()
     fecha_subida = DateField(default=date.today)  # Fecha automática
-    categoria = ForeignKeyField(Categoria, backref='recetas')
+    id_categoria = ForeignKeyField(Categoria, backref='recetas')
 
 # Crear la aplicación Flask
 app = Flask(__name__, static_folder='static')
