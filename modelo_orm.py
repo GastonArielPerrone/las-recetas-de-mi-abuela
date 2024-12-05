@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from peewee import Model, SqliteDatabase, CharField, AutoField, ForeignKeyField, DateField
+from peewee import Model, SqliteDatabase, CharField, AutoField, ForeignKeyField, DateField, PrimaryKeyField
 from datetime import date
 import os
 
@@ -24,7 +24,7 @@ class Receta(BaseModel):
     ingredientes = CharField()
     preparacion = CharField()
     fecha_subida = DateField(default=date.today)  # Fecha automática
-    id_categoria = ForeignKeyField(Categoria, backref='recetas')
+    id_categoria = ForeignKeyField(Categoria, backref='recetas', null=False)
 
 # Crear la aplicación Flask
 app = Flask(__name__, static_folder='static')
@@ -45,8 +45,8 @@ def inicio():
 @app.route('/consultar_recetas', methods=['GET'])
 def consultar_recetas():
     # Recuperar los parámetros de búsqueda
-    ingrediente = request.args.get('ingrediente')
-    nombre_receta = request.args.get('nombre_receta')
+    ingrediente = request.args.get('ingredients')
+    nombre_receta = request.args.get('recipeName')
     categoria = request.args.get('category')
 
     # Construir la consulta según los parámetros
@@ -63,10 +63,7 @@ def consultar_recetas():
     recetas = list(query)
 
     # Renderizar la plantilla con los resultados
-    return render_template(
-        'Consultar_recetas.html',
-        recetas=recetas
-    )
+    return render_template('Consultar_recetas.html',recetas=recetas)
 
 # Cargar una nueva receta
 @app.route('/cargar_receta', methods=['GET', 'POST'])

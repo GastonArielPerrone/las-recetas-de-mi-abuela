@@ -28,8 +28,8 @@
         <!-- Formulario para buscar por ingrediente -->
         <form id="form-buscar-ingrediente" action="{{ url_for('consultar_recetas') }}" method="GET">
           <div class="mb-3">
-            <label for="ingrediente" class="form-label">Buscar por ingrediente</label>
-            <input type="text" class="form-control" id="ingrediente" name="ingrediente" placeholder="Ingresa un ingrediente" value="{{ request.args.get('ingrediente', '') }}" />
+            <label for="ingredients" class="form-label">Buscar por ingrediente</label>
+            <input type="text" class="form-control" id="ingrediente" name="ingredients" placeholder="Ingresa un ingrediente" value="{{ request.args.get('ingrediente', '') }}" />
             <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
           </div>
         </form>
@@ -37,8 +37,8 @@
         <!-- Formulario para buscar por nombre de receta -->
         <form id="form-buscar-nombre" action="{{ url_for('consultar_recetas') }}" method="GET">
           <div class="mb-3">
-            <label for="nombre-receta" class="form-label">Buscar por nombre de receta</label>
-            <input type="text" class="form-control" id="nombre-receta" name="nombre_receta" placeholder="Ingresa el nombre de la receta" value="{{ request.args.get('nombre_receta', '') }}" />
+            <label for="recipeName" class="form-label">Buscar por nombre de receta</label>
+            <input type="text" class="form-control" id="nombre-receta" name="recipeName" placeholder="Ingresa el nombre de la receta" value="{{ request.args.get('nombre_receta', '') }}" />
             <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
           </div>
         </form>
