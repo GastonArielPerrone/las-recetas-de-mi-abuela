@@ -24,7 +24,7 @@ class Receta(BaseModel):
     ingredientes = CharField()
     preparacion = CharField()
     fecha_subida = DateField(default=date.today)  # Fecha automática
-    id_categoria = ForeignKeyField(Categoria, backref='recetas')
+    categoria = ForeignKeyField(Categoria, backref='recetas')
 
 # Crear la aplicación Flask
 app = Flask(__name__, static_folder='static')
@@ -63,7 +63,7 @@ def consultar_recetas():
     recetas = list(query)
 
     # Supongamos que Receta tiene una relación con Categorias a través de 'id_categoria'
-    recetas = Receta.select().join(Categoria).execute()
+    recetas = Receta.select().join(Categoria)
 
     # Renderizar la plantilla con los resultados
     return render_template(
