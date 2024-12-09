@@ -97,7 +97,7 @@ def cargar_receta():
                 ingredientes=ingredientes,
                 preparacion=preparacion,
                 imagen_receta=ruta_imagen,
-                id_categoria=nombre_categoria,
+                categoria=nombre_categoria,
             )
             return redirect(url_for('inicio'))
 
