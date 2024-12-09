@@ -13,7 +13,6 @@ class BaseModel(Model):
 
 # Modelo para la tabla Categorias
 class Categoria(BaseModel):
-    id_categoria = AutoField(primary_key=True)
     nombre_categoria = CharField(unique=True)
 
 # Modelo para la tabla Recetas
@@ -24,7 +23,7 @@ class Receta(BaseModel):
     ingredientes = CharField()
     preparacion = CharField()
     fecha_subida = DateField(default=date.today)  # Fecha automática
-    id_categoria = ForeignKeyField(Categoria, backref='recetas')
+    categoria = ForeignKeyField(Categoria, backref='recetas')
 
 # Crear la aplicación Flask
 app = Flask(__name__, static_folder='static')
