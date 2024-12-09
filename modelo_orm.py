@@ -73,10 +73,10 @@ def cargar_receta():
             nombre_receta = request.form.get('recipeName')
             ingredientes = request.form.get('ingredients')
             preparacion = request.form.get('preparation')
-            id_categoria = request.form.get('category')
+            categoria = request.form.get('category')
 
             # Validar campos obligatorios
-            if not (nombre_receta and ingredientes and preparacion and id_categoria):
+            if not (nombre_receta and ingredientes and preparacion and categoria):
                 return "Todos los campos son obligatorios.", 400
 
             # Manejar la subida de la imagen
@@ -97,7 +97,7 @@ def cargar_receta():
                 ingredientes=ingredientes,
                 preparacion=preparacion,
                 imagen_receta=ruta_imagen,
-                id_categoria=id_categoria
+                categoria=categoria,
             )
             return redirect(url_for('inicio'))
 
