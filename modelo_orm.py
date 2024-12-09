@@ -3,8 +3,8 @@ from peewee import Model, SqliteDatabase, CharField, AutoField, ForeignKeyField,
 from datetime import date
 import os
 
-# Configuración de la base de datos
-db = SqliteDatabase('/recetas.db')
+# Configuración de la base de datos.
+db = SqliteDatabase('recetas.db')
 
 # Definición del modelo base
 class BaseModel(Model):
