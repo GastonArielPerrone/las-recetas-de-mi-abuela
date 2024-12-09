@@ -64,6 +64,19 @@ def consultar_recetas():
     # Renderizar la plantilla con los resultados
     return render_template('Consultar_recetas.html',recetas=recetas)
 
+@app.route('/ver_receta/<int:receta_id>', methods=['GET'])
+def ver_receta(receta_id):
+    try:
+        # Recuperar la receta desde la base de datos por ID
+        receta = Receta.get_or_none(Receta.id_receta == receta_id)
+        if not receta:
+            return "Receta no encontrada", 404
+        
+        # Renderizar la plantilla de la receta
+        return render_template('ver_receta.html', receta=receta)
+    except Exception as e:
+        return f"Error al cargar la receta: {str(e)}", 500
+
 # Cargar una nueva receta
 @app.route('/cargar_receta', methods=['GET', 'POST'])
 def cargar_receta():
