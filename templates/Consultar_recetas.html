@@ -80,7 +80,7 @@
                 <h5 class="card-title">{{ receta.nombre_receta }}</h5>
                 <p class="card-text">Fecha de publicación: {{ receta.fecha_publicacion }}</p>
                 <p class="card-text">Categoría: {{ receta.categoria.nombre_categoria }}</p>
-                <a href="{{ url_for('ver_receta', receta_id=receta.id_receta) }}" class="btn btn-primary">Ver receta</a>
+                <a href="{{ url_for('ver_receta', id_receta=receta.id_receta) }}" class="btn btn-primary">Ver receta</a>
               </div>
             </div>
           {% endfor %}
