@@ -75,7 +75,7 @@
         {% if recetas %}
           {% for receta in recetas %}
             <div class="card mb-4">
-              <img src="{{ receta.imagen or '/static/default_recipe.jpg' }}" alt="{{ receta.nombre_receta }}" class="card-img-top">
+              <img src="{{ receta.imagen_receta or '/static/default_recipe.jpg' }}" alt="{{ receta.nombre_receta }}" class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title">{{ receta.nombre_receta }}</h5>
                 <p class="card-text">Fecha de publicación: {{ receta.fecha_publicacion }}</p>

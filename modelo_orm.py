@@ -64,11 +64,11 @@ def consultar_recetas():
     # Renderizar la plantilla con los resultados
     return render_template('Consultar_recetas.html',recetas=recetas)
 
-@app.route('/ver_receta/<int:receta_id>', methods=['GET'])
-def ver_receta(receta_id):
+@app.route('/ver_receta/<int:id_receta>', methods=['GET'])
+def ver_receta(id_receta):
     try:
         # Recuperar la receta desde la base de datos por ID
-        receta = Receta.get_or_none(Receta.id_receta == receta_id)
+        receta = Receta.get_or_none(Receta.id_receta == id_receta)
         if not receta:
             return "Receta no encontrada", 404
         
