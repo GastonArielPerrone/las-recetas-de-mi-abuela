@@ -88,16 +88,20 @@ def cargar_receta():
                     return "El archivo debe ser una imagen válida", 400
                 ruta_imagen = os.path.join(app.config['UPLOAD_FOLDER'], imagen.filename)
                 imagen.save(ruta_imagen)
+                nombre_archivo = os.path.basename(ruta_imagen)
             else:
                 return "Se requiere una imagen", 400
+
+            # Obtener el objeto de categoría
+            categoria_obj = Categoria.get_by_id(categoria)
 
             # Guardar receta en la base de datos
             Receta.create(
                 nombre_receta=nombre_receta,
                 ingredientes=ingredientes,
                 preparacion=preparacion,
-                imagen_receta=ruta_imagen,
-                categoria=categoria
+                imagen_receta=nombre_archivo,
+                categoria=categoria_obj
             )
             return redirect(url_for('inicio'))
 
