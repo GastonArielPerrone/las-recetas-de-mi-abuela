@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: las-recetas-de-mi-abuela
+    runtime: python  # Especifica que el entorno es Python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "./start.sh"
+    disk:
+      name: receta-disk
+      mountPath: /var/data
