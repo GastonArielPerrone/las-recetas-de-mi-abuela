@@ -4,8 +4,7 @@ from datetime import date
 import os
 
 # Configuración de la base de datos
-DATABASE = '/var/data/recetas.db' if os.getenv('RENDER') else 'recetas.db'
-db = SqliteDatabase(DATABASE)
+db = SqliteDatabase('/recetas.db')
 
 # Definición del modelo base
 class BaseModel(Model):
