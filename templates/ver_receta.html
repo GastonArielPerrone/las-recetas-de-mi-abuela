@@ -24,7 +24,7 @@
     <h2 class="text-center">{{ receta.nombre_receta }}</h2>
     <div class="row mt-4">
       <div class="col-md-6">
-        <img src="{{ receta.imagen }}" alt="{{ receta.nombre_receta }}" class="img-fluid">
+        <img src="{{ url_for('static', filename='uploads/' + receta.imagen_receta) }}" alt="{{ receta.nombre_receta }}" class="img-fluid">
       </div>
       <div class="col-md-6">
         <p><strong>Categoría:</strong> {{ receta.categoria.nombre_categoria }}</p>
