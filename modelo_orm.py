@@ -22,7 +22,7 @@ class Receta(BaseModel):
     imagen_receta = CharField()  # Ruta de la imagen
     ingredientes = CharField()
     preparacion = CharField()
-    fecha_subida = DateField(default=date.today)  # Fecha automática
+    fecha_publicacion = DateField(default=date.today)  # Fecha automática
     categoria = ForeignKeyField(Categoria, backref='recetas')
 
 # Crear la aplicación Flask
