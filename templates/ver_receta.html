@@ -27,7 +27,7 @@
         <img src="{{ receta.imagen }}" alt="{{ receta.nombre_receta }}" class="img-fluid">
       </div>
       <div class="col-md-6">
-        <p><strong>Categoría:</strong> {{ categoria.nombre_categoria }}</p>
+        <p><strong>Categoría:</strong> {{ receta.categoria.nombre_categoria }}</p>
         <p><strong>Fecha de publicación:</strong> {{ receta.fecha_publicacion.strftime('%d/%m/%Y') }}</p>
         <p><strong>Ingredientes:</strong><br>{{ receta.ingredientes }}</p>
         <p><strong>Preparación:</strong><br>{{ receta.preparacion }}</p>
