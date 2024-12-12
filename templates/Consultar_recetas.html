@@ -29,7 +29,7 @@
         <form id="form-buscar-ingrediente" action="{{ url_for('consultar_recetas') }}" method="GET">
           <div class="mb-3">
             <label for="ingredients" class="form-label">Buscar por ingrediente</label>
-            <input type="text" class="form-control" id="ingrediente" name="ingredients" placeholder="Ingresa un ingrediente" value="{{ request.args.get('ingrediente', '') }}" />
+            <input type="text" class="form-control" id="ingrediente" name="ingredients" placeholder="Ingresa un ingrediente" value="{{ request.args.get('ingredients', '') }}" />
             <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
           </div>
         </form>
@@ -38,7 +38,7 @@
         <form id="form-buscar-nombre" action="{{ url_for('consultar_recetas') }}" method="GET">
           <div class="mb-3">
             <label for="recipeName" class="form-label">Buscar por nombre de receta</label>
-            <input type="text" class="form-control" id="nombre-receta" name="recipeName" placeholder="Ingresa el nombre de la receta" value="{{ request.args.get('nombre_receta', '') }}" />
+            <input type="text" class="form-control" id="nombre-receta" name="recipeName" placeholder="Ingresa el nombre de la receta" value="{{ request.args.get('recipeName', '') }}" />
             <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
           </div>
         </form>
@@ -49,20 +49,11 @@
             <label for="category">Categoría</label>
             <select class="form-control" id="category" name="category" required>
               <option value="" disabled selected>Selecciona una categoría</option>
-              <option value="Entradas" {% if request.args.get('category') == 'Entradas' %}selected{% endif %}>Entradas</option>
-              <option value="Platos principales" {% if request.args.get('category') == 'Platos principales' %}selected{% endif %}>Platos principales</option>
-              <option value="Postres" {% if request.args.get('category') == 'Postres' %}selected{% endif %}>Postres</option>
-              <option value="Bebidas" {% if request.args.get('category') == 'Bebidas' %}selected{% endif %}>Bebidas</option>
-              <option value="Sopas" {% if request.args.get('category') == 'Sopas' %}selected{% endif %}>Sopas</option>
-              <option value="Panadería" {% if request.args.get('category') == 'Panadería' %}selected{% endif %}>Panadería</option>
-              <option value="Pastelería" {% if request.args.get('category') == 'Pastelería' %}selected{% endif %}>Pastelería</option>
-              <option value="Galletas" {% if request.args.get('category') == 'Galletas' %}selected{% endif %}>Galletas</option>
-              <option value="Salsas" {% if request.args.get('category') == 'Salsas' %}selected{% endif %}>Salsas</option>
-              <option value="Ensaladas" {% if request.args.get('category') == 'Ensaladas' %}selected{% endif %}>Ensaladas</option>
-              <option value="Guarniciones" {% if request.args.get('category') == 'Guarniciones' %}selected{% endif %}>Guarniciones</option>
-              <option value="Vegetarianas" {% if request.args.get('category') == 'Vegetarianas' %}selected{% endif %}>Vegetarianas</option>
-              <option value="Sin gluten" {% if request.args.get('category') == 'Sin gluten' %}selected{% endif %}>Sin gluten</option>
-              <option value="Apto para diabéticos" {% if request.args.get('category') == 'Apto para diabéticos' %}selected{% endif %}>Apto para diabéticos</option>
+              {% for categoria in categorias %}
+                <option value="{{ categoria.nombre_categoria }}" {% if request.args.get('category') == categoria.nombre_categoria %}selected{% endif %}>
+                  {{ categoria.nombre_categoria }}
+                </option>
+              {% endfor %}
             </select>
             <button type="submit" class="btn btn-primary mt-2 w-100">Buscar</button>
           </div>
@@ -72,26 +63,37 @@
       <!-- Columna Derecha (Recetas) -->
       <div class="col-md-9">
         <div id="resultado-recetas">
-        {% if recetas %}
-          {% for receta in recetas %}
-            <div class="card mb-4">
-              <img src="{{ url_for('static', filename='uploads/' + receta.imagen_receta) }}" alt="{{ receta.nombre_receta }}">
-              <div class="card-body">
-                <h5 class="card-title">{{ receta.nombre_receta }}</h5>
-                <p class="card-text">Fecha de publicación: {{ receta.fecha_publicacion }}</p>
-                <p class="card-text">Categoría: {{ receta.categoria.nombre_categoria }}</p>
-                <a href="{{ url_for('ver_receta', id_receta=receta.id_receta) }}" class="btn btn-primary">Ver receta</a>
+          {% if recetas %}
+            {% for receta in recetas %}
+              <div class="card mb-4">
+                <img src="{{ url_for('static', filename='uploads/' + receta.imagen_receta) }}" alt="{{ receta.nombre_receta }}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ receta.nombre_receta }}</h5>
+                  <p class="card-text">Fecha de publicación: {{ receta.fecha_publicacion }}</p>
+                  <p class="card-text">Categoría: {{ receta.categoria.nombre_categoria }}</p>
+                  <a href="{{ url_for('ver_receta', id_receta=receta.id_receta) }}" class="btn btn-primary">Ver receta</a>
+                </div>
               </div>
-            </div>
-          {% endfor %}
-        {% else %}
-           <p>¡Lo siento! No encontré ninguna receta.</p>
-        {% endif %}
+            {% endfor %}
+          {% else %}
+            <p>¡Lo siento! No encontré ninguna receta.</p>
+          {% endif %}
+        </div>
+
+        <!-- Paginación -->
+        <div class="d-flex justify-content-center mt-4">
+          {% if page > 1 %}
+            <a href="{{ url_for('consultar_recetas', page=page-1, ingredients=request.args.get('ingredients'), recipeName=request.args.get('recipeName'), category=request.args.get('category')) }}" class="btn btn-secondary">Anterior</a>
+          {% endif %}
+
+          {% if page < total_paginas %}
+            <a href="{{ url_for('consultar_recetas', page=page+1, ingredients=request.args.get('ingredients'), recipeName=request.args.get('recipeName'), category=request.args.get('category')) }}" class="btn btn-secondary ms-2">Siguiente</a>
+          {% endif %}
         </div>
       </div>
     </div>
   </main>
-  
+
   <!-- Footer -->
   <footer class="text-center py-4">
     <p>&copy; 2024 Gastón Ariel Perrone</p>
