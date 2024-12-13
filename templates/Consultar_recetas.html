@@ -48,7 +48,7 @@
           <div class="form-group">
             <label for="category">Categoría</label>
             <select class="form-control" id="category" name="category" required>
-              <option value="" disabled selected>Selecciona una categoría</option>
+              <option value="" selected>Selecciona una categoría</option>
               {% for categoria in categorias %}
                 <option value="{{ categoria.nombre_categoria }}" {% if request.args.get('category') == categoria.nombre_categoria %}selected{% endif %}>
                   {{ categoria.nombre_categoria }}
