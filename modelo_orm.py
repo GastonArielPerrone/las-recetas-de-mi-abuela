@@ -70,8 +70,11 @@ def consultar_recetas():
     total_recetas = query.count()
     total_paginas = (total_recetas // recetas_por_pagina) + (1 if total_recetas % recetas_por_pagina > 0 else 0)
 
+    #Agregamos las categorías
+    categorias = Categoria.select()
+
     # Renderizar la plantilla con los resultados y la paginación
-    return render_template('Consultar_recetas.html', recetas=recetas, page=page, total_paginas=total_paginas)
+    return render_template('Consultar_recetas.html', recetas=recetas, page=page, total_paginas=total_paginas, categorias=categorias)
 
 @app.route('/ver_receta/<int:id_receta>', methods=['GET'])
 def ver_receta(id_receta):
