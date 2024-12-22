@@ -58,10 +58,13 @@ def consultar_recetas():
 
     if ingrediente:
         query = query.where(Receta.ingredientes.contains(ingrediente))
+        count = query.count()
     if nombre_receta:
         query = query.where(Receta.nombre_receta.contains(nombre_receta))
+        count = query.count()
     if categoria:
         query = query.join(Categoria).where(Categoria.nombre_categoria == categoria)
+        count = query.count()
 
     # Obtener las recetas paginadas
     recetas = list(query.limit(recetas_por_pagina).offset(offset))
