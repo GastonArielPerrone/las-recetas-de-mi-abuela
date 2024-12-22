@@ -66,7 +66,6 @@
       <div class="col-md-9">
         <div id="resultado-recetas">
           {% if recetas %}
-          <p>{{ receta.count() }} resultados</p>
             {% for receta in recetas %}
               <div class="card mb-4">
                 <img src="{{ url_for('static', filename='uploads/' + receta.imagen_receta) }}" alt="{{ receta.nombre_receta }}">
