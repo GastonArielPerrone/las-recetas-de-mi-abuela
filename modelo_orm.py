@@ -55,16 +55,17 @@ def consultar_recetas():
 
     # Construir la consulta según los parámetros
     query = Receta.select()
+    countRecipes = query.count()
 
     if ingrediente:
         query = query.where(Receta.ingredientes.contains(ingrediente))
-        count = query.count()
+        countRecipes = query.count()
     if nombre_receta:
         query = query.where(Receta.nombre_receta.contains(nombre_receta))
-        count = query.count()
+        countRecipes = query.count()
     if categoria:
         query = query.join(Categoria).where(Categoria.nombre_categoria == categoria)
-        count = query.count()
+        countRecipes = query.count()
 
     # Obtener las recetas paginadas
     recetas = list(query.limit(recetas_por_pagina).offset(offset))
@@ -77,7 +78,7 @@ def consultar_recetas():
     categorias = Categoria.select()
 
     # Renderizar la plantilla con los resultados y la paginación
-    return render_template('Consultar_recetas.html', recetas=recetas, page=page, total_paginas=total_paginas, categorias=categorias)
+    return render_template('Consultar_recetas.html', recetas=recetas, page=page, total_paginas=total_paginas, categorias=categorias, countRecipes=countRecipes)
 
 @app.route('/ver_receta/<int:id_receta>', methods=['GET'])
 def ver_receta(id_receta):
