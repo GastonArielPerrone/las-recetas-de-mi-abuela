@@ -14,6 +14,11 @@
   <!-- Hoja de Estilos -->
   <link href="../static/styles.css" rel="stylesheet" type="text/css" />
   <link rel="shortcut icon" href="../static/abuela_cocina.ico">
+  <script src="https://kit.fontawesome.com/61f405be4a.js" crossorigin="anonymous"></script>
+  <meta property="og:title" content="Título del contenido a compartir" /> 
+  <meta property="og:description" content="Descripción del contenido a compartir" /> 
+  <meta property="og:image" content="../static/uploads/{{ receta.imagen_receta }}" /> 
+  <meta property="og:url" content="https://las-recetas-de-mi-abuela.onrender.com/ver_receta/{{ receta.id_receta }}" />
 </head>
 <body>
   <!--Button retro-->
@@ -36,6 +41,14 @@
         <p><strong>Fecha de publicación:</strong> {{ receta.fecha_publicacion.strftime('%d/%m/%Y') }}</p>
         <p><strong>Ingredientes:</strong><br>{{ receta.ingredientes }}</p>
         <p><strong>Preparación:</strong><br>{{ receta.preparacion }}</p>
+        <!-- Botón de compartir en Facebook --> 
+      <button onclick="shareOnFacebook()"><i class="fa-brands fa-facebook"></i></button> 
+      <!-- Botón de compartir en Twitter --> 
+     <button onclick="shareOnTwitter()"><i class="fa-brands fa-x-twitter"></i></button> 
+       <!-- Botón de compartir en WhatsApp --> 
+     <button onclick="shareOnWhatsApp()"><i class="fa-brands fa-whatsapp"></i></button> 
+        <!-- Botón de compartir por correo electrónico --> 
+     <button onclick="shareByEmail()"><i class="fa-solid fa-envelope"></i></button>
       </div>
     </div>
   </main>
@@ -44,5 +57,25 @@
   <footer class="text-center py-4">
     <p>&copy; 2024 Gastón Ariel Perrone</p>
   </footer>
+  <script> // Texto predefinido a compartir 
+    const predefinedText = "¡Echa un vistazo a este increíble contenido!"; 
+    const emailBody = `Hola,\n\n${predefinedText}\n\n` + `Título: ${document.querySelector('meta[property="og:title"]').content}\n` + `Descripción: ${document.querySelector('meta[property="og:description"]').content}\n` + `Enlace: ${document.querySelector('meta[property="og:url"]').content}\n\n` + `¡Saludos!`; 
+    function shareOnFacebook() { 
+    const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
+    const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank'); 
+    } 
+    function shareOnTwitter() { 
+      const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
+      const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); window.open(`https://twitter.com/share?url=${url}&text=${text}`, '_blank'); 
+    } 
+    function shareOnWhatsApp() { 
+      const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
+      const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank'); 
+    } 
+    function shareByEmail() { 
+      const subject = encodeURIComponent("¡Mira este contenido interesante!"); 
+      const body = encodeURIComponent(emailBody); window.open(`mailto:?subject=${subject}&body=${body}`, '_blank'); 
+    } 
+  </script>
 </body>
 </html>
