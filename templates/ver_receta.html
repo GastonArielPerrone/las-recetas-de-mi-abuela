@@ -62,19 +62,23 @@
     const emailBody = `Hola,\n\n${predefinedText}\n\n` + `Título: ${document.querySelector('meta[property="og:title"]').content}\n` + `Descripción: ${document.querySelector('meta[property="og:description"]').content}\n` + `Enlace: ${document.querySelector('meta[property="og:url"]').content}\n\n` + `¡Saludos!`; 
     function shareOnFacebook() { 
     const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
-    const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank'); 
+    const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); 
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank'); 
     } 
     function shareOnTwitter() { 
       const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
-      const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); window.open(`https://twitter.com/share?url=${url}&text=${text}`, '_blank'); 
+      const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); 
+      window.open(`https://twitter.com/share?url=${url}&text=${text}`, '_blank'); 
     } 
     function shareOnWhatsApp() { 
       const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
-      const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank'); 
+      const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); 
+      window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank'); 
     } 
     function shareByEmail() { 
       const subject = encodeURIComponent("¡Mira este contenido interesante!"); 
-      const body = encodeURIComponent(emailBody); window.open(`mailto:?subject=${subject}&body=${body}`, '_blank'); 
+      const body = encodeURIComponent(emailBody); 
+      window.open(`mailto:?subject=${subject}&body=${body}`, '_blank'); 
     } 
   </script>
 </body>
