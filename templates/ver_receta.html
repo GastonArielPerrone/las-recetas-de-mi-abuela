@@ -61,9 +61,15 @@
     const predefinedText = "¡Echa un vistazo a este increíble contenido!"; 
     const emailBody = `Hola,\n\n${predefinedText}\n\n` + `Título: ${document.querySelector('meta[property="og:title"]').content}\n` + `Descripción: ${document.querySelector('meta[property="og:description"]').content}\n` + `Enlace: ${document.querySelector('meta[property="og:url"]').content}\n\n` + `¡Saludos!`; 
     function shareOnFacebook() { 
-    const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
-    const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); 
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank'); 
+      const url = document.querySelector('meta[property="og:url"]').content;
+      const title = document.querySelector('meta[property="og:title"]').content;
+      
+      if (url && title) {
+          const text = encodeURIComponent(predefinedText + " " + title);
+          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${text}`, '_blank');
+      } else {
+          console.error('Metadatos no encontrados.');
+      }
     } 
     function shareOnTwitter() { 
       const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
