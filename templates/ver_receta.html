@@ -22,7 +22,7 @@
 </head>
 <body>
   <!--Button retro-->
-  <button onclick="window.location.href='/consultar_recetas';"><ion-icon name="arrow-back"></ion-icon> <!--filled--></button>
+  <button onclick="window.location.href='/consultar_recetas';"><ion-icon name="arrow-back"></ion-icon></button>
   <!-- Header -->
   <header class="text-center py-5">
     <img alt="Logo de Las recetas de mi abuela" aria-label="Logo de Las recetas de mi abuela" src="../static/abuela_cocina.png" width="210" />
@@ -51,6 +51,7 @@
      <button onclick="shareByEmail()"><i class="fa-solid fa-envelope"></i></button>
       </div>
     </div>
+    <button onclick="printing()"><i class="fa-solid fa-print"></i></button>
   </main>
 
   <!-- Footer -->
@@ -88,7 +89,11 @@
       const subject = encodeURIComponent("¡Mira este contenido interesante!"); 
       const body = encodeURIComponent(emailBody); 
       window.open(`mailto:?subject=${subject}&body=${body}`, '_blank'); 
-    } 
+    }
+    
+    function printing() {
+      window.print();
+    }
   </script>
 </body>
 </html>

@@ -75,3 +75,19 @@ ion-icon {
     font-size: 20px;
     color: #0056b3;
   }
+
+  @media print {
+    header {
+        margin-bottom: 0; /* Reduce el espacio debajo del encabezado */
+      }
+      main {
+        margin-top: 0; /* Reduce el espacio encima del contenido principal */
+      }
+      .container {
+        padding-top: 0; /* Asegura que no haya padding adicional */
+      }
+
+    button {
+        display: none;
+    }
+}
