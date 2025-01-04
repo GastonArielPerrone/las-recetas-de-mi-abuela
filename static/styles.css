@@ -90,4 +90,10 @@ ion-icon {
     button {
         display: none;
     }
+
+    body {
+        transform: scale(0.7);
+        position: relative;
+        bottom: 100px;
+    }
 }
