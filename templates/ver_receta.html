@@ -82,8 +82,8 @@
     } 
     function shareOnWhatsApp() { 
       const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
-      const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); 
-      window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank'); 
+      const text = predefinedText + "\n" + url;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank'); 
     } 
     function shareByEmail() { 
       const subject = encodeURIComponent("¡Mira este contenido interesante!"); 
