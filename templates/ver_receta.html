@@ -19,6 +19,7 @@
   <meta property="og:description" content="Esta es una receta de la categoría {{ receta.categoria.nombre_categoria }}" /> 
   <meta property="og:image" content="https://las-recetas-de-mi-abuela.onrender.com/ver_receta/static/uploads/{{ receta.imagen_receta }}" /> 
   <meta property="og:url" content="https://las-recetas-de-mi-abuela.onrender.com/ver_receta/{{ receta.id_receta }}" />
+
 </head>
 <body>
   <!--Button retro-->
@@ -81,7 +82,7 @@
       window.open(`https://twitter.com/share?url=${url}&text=${text}`, '_blank'); 
     } 
     function shareOnWhatsApp() { 
-      const url = encodeURIComponent(document.querySelector('meta[property="og:url"]').content); 
+      const url = encodeURIComponent(window.location.href); 
       const text = predefinedText + "\n" + url;
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank'); 
     } 
