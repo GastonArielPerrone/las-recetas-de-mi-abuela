@@ -81,11 +81,17 @@
       const text = encodeURIComponent(predefinedText + " " + document.querySelector('meta[property="og:title"]').content); 
       window.open(`https://twitter.com/share?url=${url}&text=${text}`, '_blank'); 
     } 
-    function shareOnWhatsApp() { 
-      const url = encodeURIComponent(window.location.href); 
-      const text = predefinedText + "\n" + url;
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank'); 
-    } 
+    function shareOnWhatsApp() {
+    const titulo = "{{ receta.nombre_receta|e }}";
+    const descripcion = "{{ receta.preparacion|e }}";
+    const imagen = "{{ url_for('static', filename=receta.imagen_receta) }}";
+    
+    // WhatsApp no permite imágenes directas, pero podés incluir el enlace como texto
+    const mensaje = `🍽️ *${titulo}*\n\n${descripcion}\n\n📷 Imagen: {{ request.url_root }}${imagen}`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+    window.open(whatsappUrl, '_blank');
+}
     function shareByEmail() { 
       const subject = encodeURIComponent("¡Mira este contenido interesante!"); 
       const body = encodeURIComponent(emailBody); 
